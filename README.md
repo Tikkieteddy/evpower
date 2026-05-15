@@ -29,6 +29,19 @@ Credit: tikkieteddielab
 - Recharts
 - Local Storage
 
+## Login
+
+แอปมี client-side login gate สำหรับครอบการใช้งาน dashboard:
+
+```text
+Username: admin
+Password: TikkieTeddie@2026
+```
+
+Session ถูกเก็บใน Local Storage และสามารถออกจากระบบได้ด้วยปุ่ม `Logout`
+
+ข้อจำกัด: ระบบนี้เป็น login gate สำหรับ static app เท่านั้น ไม่ใช่ authentication ระดับ production เพราะไม่มี backend/server-side session หากต้องการขายเป็นระบบที่ป้องกันจริง ควรต่อ backend, database, password hashing และ auth provider เช่น Clerk/Auth0/Supabase Auth
+
 ## Project Structure
 
 ```text

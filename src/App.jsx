@@ -1,10 +1,11 @@
 // tikkieteddielab: EV power dashboard application shell.
 import { useEffect, useMemo, useState } from "react";
-import { BatteryCharging, CalendarDays, ChartNoAxesCombined, Map, PlugZap, Route, TrendingUp } from "lucide-react";
+import { BatteryCharging, CalendarDays, ChartNoAxesCombined, LogOut, Map, PlugZap, Route, TrendingUp } from "lucide-react";
 import ChargingAnalysis from "./components/ChargingAnalysis.jsx";
 import DailyLog from "./components/DailyLog.jsx";
 import Forecast from "./components/Forecast.jsx";
 import LicenseLock from "./components/LicenseLock.jsx";
+import LoginScreen from "./components/LoginScreen.jsx";
 import MonthlyDashboard from "./components/MonthlyDashboard.jsx";
 import RouteAnalysis from "./components/RouteAnalysis.jsx";
 import WeeklyDashboard from "./components/WeeklyDashboard.jsx";
@@ -13,6 +14,7 @@ import Charts from "./components/Charts.jsx";
 import { sampleTrips } from "./data/sampleData.js";
 import { appBrandPalette, paletteAuditSummary } from "./data/brandAudit.js";
 import { summarizeTrips } from "./utils/calculations.js";
+import { clearAuthSession, readAuthSession } from "./utils/auth.js";
 import { tikkieTeddieFooter, verifyTikkieTeddieLicense } from "./utils/licenseGuard.js";
 
 const storageKey = "ev-charge-daily-log-v1";
@@ -38,16 +40,21 @@ function loadTrips() {
 export default function App() {
   const [activeTab, setActiveTab] = useState("daily");
   const [trips, setTrips] = useState(loadTrips);
+  const [authSession, setAuthSession] = useState(readAuthSession);
   const summary = useMemo(() => summarizeTrips(trips), [trips]);
   const licenseStatus = useMemo(() => verifyTikkieTeddieLicense(), []);
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(trips));
+  }, [trips]);
 
   if (!licenseStatus.ok) {
     return <LicenseLock status={licenseStatus} />;
   }
 
-  useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(trips));
-  }, [trips]);
+  if (!authSession) {
+    return <LoginScreen onLogin={setAuthSession} />;
+  }
 
   const saveTrip = (trip) => {
     setTrips((current) => {
@@ -66,6 +73,11 @@ export default function App() {
     if (confirm("โหลดข้อมูลตัวอย่าง 7 วันและแทนที่ข้อมูลปัจจุบันใช่ไหม?")) {
       setTrips(sampleTrips);
     }
+  };
+
+  const logout = () => {
+    clearAuthSession();
+    setAuthSession(null);
   };
 
   const renderTab = () => {
@@ -110,6 +122,13 @@ export default function App() {
                 </button>
               );
             })}
+            <button
+              type="button"
+              onClick={logout}
+              className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg border border-[var(--blonde-line)] bg-[var(--blonde-soft)] px-3 text-sm font-bold text-[var(--marine-ink)] hover:bg-white"
+            >
+              <LogOut size={16} /> Logout
+            </button>
           </nav>
         </div>
       </header>
