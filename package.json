@@ -1,32 +1,29 @@
 {
-  "name": "user-profile",
-  "version": "0.1.0",
+  "name": "ev-charge-daily-calculator",
+  "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "typecheck": "next typegen && tsc --noEmit",
-    "test": "npm run typecheck && npm run lint"
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "lint": "eslint .",
+    "test": "npm run build"
   },
   "dependencies": {
-    "@types/nodemailer": "^8.0.0",
-    "googleapis": "^169.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
     "lucide-react": "^0.555.0",
-    "next": "16.1.6",
-    "nodemailer": "^8.0.6",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "recharts": "^3.5.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.18",
-    "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.1",
-    "eslint-config-next": "16.1.6",
     "tailwindcss": "^4.1.18",
-    "typescript": "^5.9.3"
+    "vite": "^7.2.0"
   }
 }

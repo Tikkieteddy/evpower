@@ -1,196 +1,92 @@
-# User Profile Queue
+# EV Charge Daily Calculator
 
-Next.js app for collecting organization profile data, uploading profile images to Google Drive, writing rows to Google Sheets, tracking queue status, and managing status from an admin page.
+เว็บแอป Responsive สำหรับบันทึกการเดินทางรายวันและคำนวณค่าชาร์จไฟรถ EV ทั้งรายวัน รายสัปดาห์ รายเดือน วิเคราะห์ตามเส้นทาง และประมาณการเดือนถัดไป
 
-## Pages
+## Features
 
-- `/add-profile` - user profile form and image upload.
-- `/edit-profile/[queue]` - user edit page while status is still `Upload`.
-- `/track` - queue status lookup with progress steps.
-- `/admin` - simple password-protected admin dashboard.
+- Daily Log เพิ่ม แก้ไข ลบ รายการย้อนหลัง
+- บันทึกวันที่ ชื่อเส้นทาง ระยะทาง สถานะการชาร์จ จำนวนเงิน kWh และหมายเหตุ
+- บันทึกเวลาจอดรอเปิดแอร์ และประเมิน kWh/ค่าไฟที่ใช้ตอนจอดรอ
+- เลือกเครื่องชาร์จจากรายการ PTT, EleXa, ReverSharger, PEA VOLTA, EVolt, MEA, Spark, EA Anywhere, TOCharge, iGreen+ หรือระบุเอง
+- เก็บข้อมูลด้วย Local Storage ไม่ต้องใช้ Backend
+- Dashboard รายสัปดาห์และรายเดือน
+- Route Analysis แยกตามชื่อเส้นทาง
+- Charging Analysis วิเคราะห์ค่าเฉลี่ยบาท/kWh และบาท/ครั้งของแต่ละเครื่องชาร์จ
+- Forecast เดือนถัดไปจากค่าเฉลี่ยของเส้นทางและจำนวนครั้งที่คาดว่าจะวิ่ง
+- กราฟด้วย Recharts: ค่าใช้จ่ายรายวัน ระยะทางรายวัน และสัดส่วนค่าใช้จ่ายตามเส้นทาง
+- มีข้อมูลตัวอย่าง 7 วันเมื่อเปิดใช้งานครั้งแรก
 
-## Google Sheet Schema
+## Tech Stack
 
-The app appends rows to the existing sheet columns exactly as requested:
+- React
+- Vite
+- Tailwind CSS
+- Recharts
+- Local Storage
 
-| Column | Field |
-| --- | --- |
-| A | queue |
-| B | ชื่อ |
-| C | นามสกุล |
-| D | name |
-| E | surname |
-| F | email |
-| G | email personal |
-| H | facebook |
-| I | ig |
-| J | tiktok |
-| K | X |
-| L | profile |
-| M | link upload picture |
-| N | status |
-| O | submitted_at |
-| P | completed_at |
-| Q | supervisor_email |
-| R | is_non_staff |
-| S | team |
-| T | last_update |
-| U | status_log |
+## Project Structure
 
-## Environment Variables
-
-Copy `.env.example` to `.env.local` for local development, then set:
-
-```env
-GOOGLE_SERVICE_ACCOUNT_JSON_BASE64=
-GOOGLE_SHEET_ID=1lfT2mjo1HahuJmmtjVI7yqWGpVprSGjxo7Hnc9M-6vU
-GOOGLE_SHEET_NAME=Sheet1
-GOOGLE_DRIVE_FOLDER_ID=1Zfyw75eTEgX8Gnckml8zvOPS96B86swo
-GOOGLE_APPS_SCRIPT_UPLOAD_URL=
-GITHUB_UPLOAD_TOKEN=
-GITHUB_UPLOAD_OWNER=
-GITHUB_UPLOAD_REPO=
-GITHUB_UPLOAD_BRANCH=main
-GITHUB_UPLOAD_DIR=profile-images
-ADMIN_PASSWORD=
-SMTP_HOST=
-SMTP_PORT=587
-SMTP_USER=
-SMTP_PASS=
-SMTP_FROM=
-USE_MOCK_GOOGLE=false
+```text
+src/
+  App.jsx
+  main.jsx
+  index.css
+  components/
+    Charts.jsx
+    DailyLog.jsx
+    DashboardCards.jsx
+    DataTable.jsx
+    Forecast.jsx
+    MetricCard.jsx
+    MonthlyDashboard.jsx
+    RouteAnalysis.jsx
+    WeeklyDashboard.jsx
+  data/
+    sampleData.js
+  utils/
+    calculations.js
 ```
 
-Recommended credential format:
-
-1. Create a Google Cloud service account.
-2. Enable Google Sheets API and Google Drive API.
-3. Create a JSON key.
-4. Share the Google Sheet with the service account email as Editor.
-5. Base64 encode the JSON and put it in `GOOGLE_SERVICE_ACCOUNT_JSON_BASE64`.
-
-For Windows PowerShell:
-
-```powershell
-[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes((Get-Content .\service-account.json -Raw)))
-```
-
-## Google Drive Upload via Apps Script
-
-Google service accounts do not have normal My Drive storage quota. If you upload files directly with the service account, Google Drive can return: `Service Accounts do not have storage quota`.
-
-Use this Apps Script Web App for image uploads. It runs as your Google user and saves files into the target Drive folder.
-
-1. Open [Google Apps Script](https://script.google.com/).
-2. Create a new project.
-3. Paste this code:
-
-```js
-function doPost(e) {
-  try {
-    const data = JSON.parse(e.postData.contents);
-    const folder = DriveApp.getFolderById(data.folderId);
-    const bytes = Utilities.base64Decode(data.base64);
-    const blob = Utilities.newBlob(bytes, data.mimeType, data.fileName);
-    const file = folder.createFile(blob);
-    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        ok: true,
-        url: "https://drive.google.com/uc?id=" + file.getId()
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        ok: false,
-        message: error && error.message ? error.message : String(error)
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-```
-
-4. Click `Deploy` -> `New deployment`.
-5. Type: `Web app`.
-6. Execute as: `Me`.
-7. Who has access: `Anyone`.
-8. Deploy and authorize.
-9. Copy the Web App URL.
-10. Put it in Vercel as `GOOGLE_APPS_SCRIPT_UPLOAD_URL`.
-
-Keep `GOOGLE_DRIVE_FOLDER_ID=1Zfyw75eTEgX8Gnckml8zvOPS96B86swo`.
-
-## GitHub Image Upload
-
-If GitHub upload environment variables are set, profile images are uploaded to GitHub before any Google Drive upload method is used. The Sheet stores the raw GitHub image URL in column M, so admins can click `View` in the Picture column and save the image from the browser.
-
-Recommended setup:
-
-```env
-GITHUB_UPLOAD_TOKEN=github fine-grained token
-GITHUB_UPLOAD_OWNER=your-github-username-or-org
-GITHUB_UPLOAD_REPO=your-public-repo
-GITHUB_UPLOAD_BRANCH=main
-GITHUB_UPLOAD_DIR=profile-images
-```
-
-Create a fine-grained GitHub token with access to the target repository and `Contents: Read and write` permission. Keep the repository public if you want the `View` link to open without GitHub authentication.
-
-## Local UI Preview Without Google Credentials
-
-To preview `/admin` and `/track` before connecting Google Sheets/Drive, set:
-
-```env
-ADMIN_PASSWORD=12345678
-USE_MOCK_GOOGLE=true
-```
-
-Restart the dev server after changing `.env.local`. Do not use mock mode in production.
-
-## Email Notifications
-
-When admin moves a profile to `Verify`, the app opens a note modal and sends that note to the user email automatically after submit. Configure SMTP variables in `.env.local` or Vercel Environment Variables:
-
-```env
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=your-smtp-user
-SMTP_PASS=your-smtp-password
-SMTP_FROM="Profile Admin <no-reply@example.com>"
-```
-
-In `USE_MOCK_GOOGLE=true` preview mode, missing SMTP settings are skipped so the UI can be tested locally.
-
-## Local Development
+## Install
 
 ```bash
 npm install
+```
+
+## Run Development Server
+
+```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+เปิดเว็บที่ `http://127.0.0.1:5173`
 
-## Checks
+## Build
 
 ```bash
-npm run test
 npm run build
 ```
 
-## Deploy to GitHub and Vercel
+ผลลัพธ์ production build จะอยู่ในโฟลเดอร์ `dist/`
 
-1. Push this repository to GitHub.
-2. Import the GitHub repository in Vercel.
-3. Add all environment variables from `.env.example` in Vercel Project Settings.
-4. Deploy.
-5. Test `/add-profile` with a small jpg/png/webp image, then confirm the row in Google Sheets and the uploaded file in Google Drive.
+## Deploy on Vercel
 
-## Status Flow
+นำ repository นี้ไป Import ใน Vercel ได้โดยตรง Vercel จะตรวจพบ Vite project และใช้คำสั่ง:
 
-- New submissions start as `Upload`.
-- Admin can move a record to `Verify`.
-- Admin can move a record to `Completed`; this also writes `completed_at`.
+- Build Command: `npm run build`
+- Output Directory: `dist`
 
-Existing user rows are not edited after submission except for admin status and completed timestamp updates.
+ไม่ต้องตั้งค่า Environment Variables เพราะข้อมูลถูกเก็บใน Local Storage ของ browser
+
+## Calculation Rules
+
+- บาทต่อกิโลเมตร = เงินค่าชาร์จรวม ÷ ระยะทางรวม
+- kWh ต่อกิโลเมตร = kWh รวม ÷ ระยะทางรวม
+- ค่าใช้จ่ายเฉลี่ยต่อวัน = เงินค่าชาร์จรวม ÷ จำนวนวันที่มีข้อมูล
+- ระยะทางเฉลี่ยต่อวัน = ระยะทางรวม ÷ จำนวนวันที่มีข้อมูล
+- ค่าไฟเฉลี่ยต่อ kWh = เงินค่าชาร์จรวม ÷ kWh รวม
+- kWh จอดรอ = จำนวนนาทีจอดรอ ÷ 60 × อัตราใช้ไฟตอนจอด (kWh/ชม.)
+- อัตราใช้ไฟตอนจอดแบบ Auto = ค่าเฉลี่ยถ่วงน้ำหนักจากประวัติการจอดรอเดิม ถ้ายังไม่มีข้อมูลใช้ 1.2 kWh/ชม.
+- ค่าไฟจอดรอโดยประมาณ = kWh จอดรอ × ค่าไฟเฉลี่ยต่อ kWh
+- บาทต่อ kWh ของเครื่องชาร์จ = เงินค่าชาร์จของเครื่องนั้น ÷ kWh ที่ชาร์จจากเครื่องนั้น
+- Forecast เดือนถัดไป = ค่าเฉลี่ยของเส้นทาง × จำนวนครั้งที่คาดว่าจะวิ่ง
