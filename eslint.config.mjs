@@ -1,3 +1,4 @@
+// tikkieteddielab: lint configuration for the EV power app.
 import js from "@eslint/js";
 
 export default [

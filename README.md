@@ -1,5 +1,7 @@
 # EV Charge Daily Calculator
 
+Credit: tikkieteddielab
+
 เว็บแอป Responsive สำหรับบันทึกการเดินทางรายวันและคำนวณค่าชาร์จไฟรถ EV ทั้งรายวัน รายสัปดาห์ รายเดือน วิเคราะห์ตามเส้นทาง และประมาณการเดือนถัดไป
 
 ## Features

@@ -1,3 +1,4 @@
+// tikkieteddielab: monthly EV usage dashboard.
 import { useMemo, useState } from "react";
 import Charts from "./Charts.jsx";
 import DashboardCards from "./DashboardCards.jsx";
@@ -23,8 +24,8 @@ export default function MonthlyDashboard({ trips }) {
     <div className="grid gap-5">
       <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-bold text-slate-950">Monthly Dashboard</h2>
-          <p className="text-sm text-slate-500">ภาพรวมรายเดือน พร้อมเส้นทางที่น่าสนใจ</p>
+          <h2 className="text-xl font-bold text-[var(--marine-ink)]">Monthly Dashboard</h2>
+          <p className="text-sm text-[var(--marine-muted)]">ภาพรวมรายเดือน พร้อมเส้นทางที่น่าสนใจ</p>
         </div>
         <input className="input max-w-xs" type="month" value={activeMonth || ""} onChange={(e) => setSelectedMonth(e.target.value)} />
       </div>

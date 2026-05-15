@@ -1,3 +1,4 @@
+// tikkieteddielab: dashboard summary card grid.
 import MetricCard from "./MetricCard.jsx";
 import { formatBaht, formatNumber } from "../utils/calculations.js";
 

@@ -1,3 +1,4 @@
+// tikkieteddielab: starter records for EV power dashboard.
 export const sampleTrips = [
   {
     id: "sample-1",

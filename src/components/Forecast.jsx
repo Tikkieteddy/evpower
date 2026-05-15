@@ -1,3 +1,4 @@
+// tikkieteddielab: next-month projection workflow.
 import { useMemo, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import DataTable from "./DataTable.jsx";
@@ -34,13 +35,13 @@ export default function Forecast({ trips }) {
   return (
     <div className="grid gap-5">
       <div>
-        <h2 className="text-xl font-bold text-slate-950">Forecast เดือนถัดไป</h2>
-        <p className="text-sm text-slate-500">คำนวณจากค่าเฉลี่ยของแต่ละเส้นทางคูณจำนวนครั้งที่คาดว่าจะวิ่ง</p>
+        <h2 className="text-xl font-bold text-[var(--marine-ink)]">Forecast เดือนถัดไป</h2>
+        <p className="text-sm text-[var(--marine-muted)]">คำนวณจากค่าเฉลี่ยของแต่ละเส้นทางคูณจำนวนครั้งที่คาดว่าจะวิ่ง</p>
       </div>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+      <section className="rounded-lg border border-[var(--blonde-line)] bg-white p-4 shadow-sm">
         <div className="grid gap-3 md:grid-cols-[220px_1fr]">
-          <label className="grid gap-1 text-sm font-semibold text-slate-700">
+          <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
             จำนวนวันที่คาดว่าจะวิ่ง
             <input className="input" type="number" min="1" value={expectedDays} onChange={(e) => setExpectedDays(e.target.value)} />
           </label>
@@ -65,7 +66,7 @@ export default function Forecast({ trips }) {
             ))}
             <button
               type="button"
-              className="inline-flex min-h-10 w-fit items-center justify-center gap-2 rounded-lg border border-blue-200 px-3 font-bold text-blue-700 hover:bg-blue-50"
+              className="inline-flex min-h-10 w-fit items-center justify-center gap-2 rounded-lg border border-[var(--sea-mist)] px-3 font-bold text-[var(--marine-blue)] hover:bg-[var(--sea-soft)]"
               onClick={addRow}
             >
               <Plus size={16} /> เพิ่มเส้นทาง

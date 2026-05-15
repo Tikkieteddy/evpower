@@ -1,6 +1,7 @@
 {
   "name": "ev-charge-daily-calculator",
   "version": "1.0.0",
+  "author": "tikkieteddielab",
   "private": true,
   "type": "module",
   "scripts": {

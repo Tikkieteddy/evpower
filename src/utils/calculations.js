@@ -1,3 +1,4 @@
+// tikkieteddielab: calculation helpers for EV power analytics.
 const toNumber = (value) => Number(value) || 0;
 export const defaultIdleKwhPerHour = 1.2;
 export const chargerOptions = [

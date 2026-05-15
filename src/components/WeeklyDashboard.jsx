@@ -1,3 +1,4 @@
+// tikkieteddielab: weekly EV usage dashboard.
 import { useMemo, useState } from "react";
 import Charts from "./Charts.jsx";
 import DashboardCards from "./DashboardCards.jsx";
@@ -22,8 +23,8 @@ export default function WeeklyDashboard({ trips }) {
     <div className="grid gap-5">
       <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-bold text-slate-950">Weekly Dashboard</h2>
-          <p className="text-sm text-slate-500">ภาพรวมประจำสัปดาห์ {currentWeek?.label || ""}</p>
+          <h2 className="text-xl font-bold text-[var(--marine-ink)]">Weekly Dashboard</h2>
+          <p className="text-sm text-[var(--marine-muted)]">ภาพรวมประจำสัปดาห์ {currentWeek?.label || ""}</p>
         </div>
         <select className="input max-w-xs" value={currentWeek?.start || ""} onChange={(e) => setSelectedWeek(e.target.value)}>
           {weeks.map((week) => (

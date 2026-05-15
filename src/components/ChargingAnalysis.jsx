@@ -1,3 +1,4 @@
+// tikkieteddielab: charger-brand cost analysis.
 import DataTable from "./DataTable.jsx";
 import MetricCard from "./MetricCard.jsx";
 import { chargerAnalysis, formatBaht, formatNumber, summarizeTrips } from "../utils/calculations.js";
@@ -23,8 +24,8 @@ export default function ChargingAnalysis({ trips }) {
   return (
     <div className="grid gap-5">
       <div>
-        <h2 className="text-xl font-bold text-slate-950">Charging Analysis</h2>
-        <p className="text-sm text-slate-500">วิเคราะห์อัตราค่าชาร์จของแต่ละยี่ห้อเครื่อง จากรายการที่มีการชาร์จจริง</p>
+        <h2 className="text-xl font-bold text-[var(--marine-ink)]">Charging Analysis</h2>
+        <p className="text-sm text-[var(--marine-muted)]">วิเคราะห์อัตราค่าชาร์จของแต่ละยี่ห้อเครื่อง จากรายการที่มีการชาร์จจริง</p>
       </div>
 
       <div className="grid gap-3 md:grid-cols-3">

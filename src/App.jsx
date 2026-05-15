@@ -1,3 +1,4 @@
+// tikkieteddielab: EV power dashboard application shell.
 import { useEffect, useMemo, useState } from "react";
 import { BatteryCharging, CalendarDays, ChartNoAxesCombined, Map, PlugZap, Route, TrendingUp } from "lucide-react";
 import ChargingAnalysis from "./components/ChargingAnalysis.jsx";
@@ -71,15 +72,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <div className="min-h-screen bg-[var(--blonde-wash)] text-[var(--marine-ink)]">
+      <header className="sticky top-0 z-20 border-b border-[var(--blonde-line)] bg-white/90 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-3">
-            <div className="grid h-11 w-11 place-items-center rounded-lg bg-gradient-to-br from-blue-600 to-emerald-500 text-white shadow-sm">
+            <div className="grid h-11 w-11 place-items-center rounded-lg bg-gradient-to-br from-[var(--marine-blue)] to-[var(--sea-mist)] text-white shadow-sm">
               <BatteryCharging size={24} />
             </div>
             <div>
-              <h1 className="text-lg font-black text-slate-950 sm:text-xl">EV Charge Daily Calculator</h1>
+              <h1 className="text-lg font-black text-[var(--marine-ink)] sm:text-xl">EV Charge Daily Calculator</h1>
               <p className="text-sm text-slate-500">คำนวณค่าชาร์จไฟรถ EV รายวัน รายสัปดาห์ รายเดือน และประมาณการล่วงหน้า</p>
             </div>
           </div>
@@ -94,7 +95,7 @@ export default function App() {
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
                   className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg px-3 text-sm font-bold transition ${
-                    active ? "bg-blue-600 text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                    active ? "bg-[var(--marine-blue)] text-white shadow-sm" : "border border-[var(--blonde-line)] bg-white text-[var(--marine-muted)] hover:bg-[var(--blonde-soft)]"
                   }`}
                 >
                   <Icon size={16} /> {tab.label}
@@ -106,26 +107,26 @@ export default function App() {
       </header>
 
       <main className="mx-auto grid w-full max-w-7xl gap-5 px-4 py-5">
-        <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+        <section className="rounded-lg border border-[var(--blonde-line)] bg-white p-4 shadow-sm">
           <div className="flex flex-col justify-between gap-4 xl:flex-row xl:items-end">
             <div>
-              <p className="text-sm font-bold uppercase tracking-wide text-emerald-600">Modern clean dashboard</p>
-              <h2 className="mt-2 text-2xl font-black text-slate-950 sm:text-3xl">ภาพรวมค่าใช้จ่ายและพลังงานเดินทางประจำวัน</h2>
+              <p className="text-sm font-bold uppercase tracking-wide text-[var(--marine-blue)]">Modern clean dashboard</p>
+              <h2 className="mt-2 text-2xl font-black text-[var(--marine-ink)] sm:text-3xl">ภาพรวมค่าใช้จ่ายและพลังงานเดินทางประจำวัน</h2>
               <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
                 ข้อมูลถูกบันทึกใน Local Storage บนเครื่องนี้ สามารถเพิ่ม แก้ไข ลบรายการย้อนหลัง และดูกราฟได้ทันทีโดยไม่ต้องใช้ Backend
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center sm:min-w-96">
-              <div className="rounded-lg bg-blue-50 p-3">
-                <p className="text-xl font-black text-blue-700">{summary.travelDays}</p>
+              <div className="rounded-lg bg-[var(--sea-soft)] p-3">
+                <p className="text-xl font-black text-[var(--marine-blue)]">{summary.travelDays}</p>
                 <p className="text-xs font-semibold text-slate-500">วันเดินทาง</p>
               </div>
-              <div className="rounded-lg bg-emerald-50 p-3">
-                <p className="text-xl font-black text-emerald-700">{summary.chargeDays}</p>
+              <div className="rounded-lg bg-[var(--blonde-soft)] p-3">
+                <p className="text-xl font-black text-[var(--marine-blue)]">{summary.chargeDays}</p>
                 <p className="text-xs font-semibold text-slate-500">วันชาร์จ</p>
               </div>
-              <div className="rounded-lg bg-sky-50 p-3">
-                <p className="text-xl font-black text-sky-700">{trips.length}</p>
+              <div className="rounded-lg bg-[var(--sea-soft)] p-3">
+                <p className="text-xl font-black text-[var(--marine-blue)]">{trips.length}</p>
                 <p className="text-xs font-semibold text-slate-500">รายการ</p>
               </div>
             </div>
@@ -141,6 +142,9 @@ export default function App() {
 
         {renderTab()}
       </main>
+      <footer className="border-t border-[var(--blonde-line)] bg-white/80 px-4 py-5 text-center text-sm font-semibold text-[var(--marine-muted)]">
+        © 2026 TikkieTeddie Lab | V.1.0.0
+      </footer>
     </div>
   );
 }
