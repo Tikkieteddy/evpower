@@ -40,6 +40,13 @@ Password: TikkieTeddie@2026
 
 Session ถูกเก็บใน Local Storage และสามารถออกจากระบบได้ด้วยปุ่ม `Logout`
 
+หลังเข้าใช้งาน สามารถไปที่ tab `Users` เพื่อ:
+
+- เพิ่ม user ใหม่
+- กำหนด role `user` หรือ `admin`
+- เปลี่ยน password ของ user
+- ลบ user ที่ไม่ใช่ default admin
+
 ข้อจำกัด: ระบบนี้เป็น login gate สำหรับ static app เท่านั้น ไม่ใช่ authentication ระดับ production เพราะไม่มี backend/server-side session หากต้องการขายเป็นระบบที่ป้องกันจริง ควรต่อ backend, database, password hashing และ auth provider เช่น Clerk/Auth0/Supabase Auth
 
 ## Project Structure

@@ -1,6 +1,6 @@
 // tikkieteddielab: EV power dashboard application shell.
 import { useEffect, useMemo, useState } from "react";
-import { BatteryCharging, CalendarDays, ChartNoAxesCombined, LogOut, Map, PlugZap, Route, TrendingUp } from "lucide-react";
+import { BatteryCharging, CalendarDays, ChartNoAxesCombined, LogOut, Map, PlugZap, Route, TrendingUp, Users } from "lucide-react";
 import ChargingAnalysis from "./components/ChargingAnalysis.jsx";
 import DailyLog from "./components/DailyLog.jsx";
 import Forecast from "./components/Forecast.jsx";
@@ -8,11 +8,11 @@ import LicenseLock from "./components/LicenseLock.jsx";
 import LoginScreen from "./components/LoginScreen.jsx";
 import MonthlyDashboard from "./components/MonthlyDashboard.jsx";
 import RouteAnalysis from "./components/RouteAnalysis.jsx";
+import UserManagement from "./components/UserManagement.jsx";
 import WeeklyDashboard from "./components/WeeklyDashboard.jsx";
 import DashboardCards from "./components/DashboardCards.jsx";
 import Charts from "./components/Charts.jsx";
 import { sampleTrips } from "./data/sampleData.js";
-import { appBrandPalette, paletteAuditSummary } from "./data/brandAudit.js";
 import { summarizeTrips } from "./utils/calculations.js";
 import { clearAuthSession, readAuthSession } from "./utils/auth.js";
 import { tikkieTeddieFooter, verifyTikkieTeddieLicense } from "./utils/licenseGuard.js";
@@ -26,6 +26,7 @@ const tabs = [
   { id: "routes", label: "Route Analysis", icon: Route },
   { id: "charging", label: "Charging Analysis", icon: PlugZap },
   { id: "forecast", label: "Forecast", icon: Map },
+  { id: "users", label: "Users", icon: Users },
 ];
 
 function loadTrips() {
@@ -88,13 +89,14 @@ export default function App() {
     if (activeTab === "monthly") return <MonthlyDashboard trips={trips} />;
     if (activeTab === "routes") return <RouteAnalysis trips={trips} />;
     if (activeTab === "charging") return <ChargingAnalysis trips={trips} />;
+    if (activeTab === "users") return <UserManagement currentUser={authSession.user} />;
     return <Forecast trips={trips} />;
   };
 
   return (
     <div className="min-h-screen bg-[var(--blonde-wash)] text-[var(--marine-ink)]">
       <header className="sticky top-0 z-20 border-b border-[var(--blonde-line)] bg-white/90 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="grid h-11 w-11 place-items-center rounded-lg bg-gradient-to-br from-[var(--marine-blue)] to-[var(--sea-mist)] text-white shadow-sm">
               <BatteryCharging size={24} />
@@ -105,8 +107,8 @@ export default function App() {
             </div>
           </div>
 
-          <nav className="flex gap-2 overflow-x-auto pb-1 lg:pb-0">
-            {tabs.map((tab) => {
+          <nav className="flex w-full flex-wrap gap-1.5">
+            {tabs.filter((tab) => tab.id !== "users" || authSession.role === "admin").map((tab) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
               return (
@@ -114,20 +116,20 @@ export default function App() {
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg px-3 text-sm font-bold transition ${
+                  className={`inline-flex min-h-8 flex-1 basis-[136px] items-center justify-center gap-1.5 rounded-lg px-2 text-xs font-bold transition lg:basis-0 ${
                     active ? "bg-[var(--marine-blue)] text-white shadow-sm" : "border border-[var(--blonde-line)] bg-white text-[var(--marine-muted)] hover:bg-[var(--blonde-soft)]"
                   }`}
                 >
-                  <Icon size={16} /> {tab.label}
+                  <Icon size={14} /> {tab.label}
                 </button>
               );
             })}
             <button
               type="button"
               onClick={logout}
-              className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg border border-[var(--blonde-line)] bg-[var(--blonde-soft)] px-3 text-sm font-bold text-[var(--marine-ink)] hover:bg-white"
+              className="inline-flex min-h-8 flex-1 basis-[104px] items-center justify-center gap-1.5 rounded-lg border border-[var(--blonde-line)] bg-[var(--blonde-soft)] px-2 text-xs font-bold text-[var(--marine-ink)] hover:bg-white lg:basis-0"
             >
-              <LogOut size={16} /> Logout
+              <LogOut size={14} /> Logout
             </button>
           </nav>
         </div>
@@ -141,9 +143,6 @@ export default function App() {
               <h2 className="mt-2 text-2xl font-black text-[var(--marine-ink)] sm:text-3xl">ภาพรวมค่าใช้จ่ายและพลังงานเดินทางประจำวัน</h2>
               <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
                 ข้อมูลถูกบันทึกใน Local Storage บนเครื่องนี้ สามารถเพิ่ม แก้ไข ลบรายการย้อนหลัง และดูกราฟได้ทันทีโดยไม่ต้องใช้ Backend
-              </p>
-              <p className="mt-2 max-w-3xl text-xs leading-5 text-[var(--marine-muted)]">
-                Palette audit: {Object.values(appBrandPalette).join(" / ")}. {paletteAuditSummary.scope}
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center sm:min-w-96">

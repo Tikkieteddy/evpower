@@ -1,7 +1,7 @@
 // tikkieteddielab: login screen wrapping the dashboard.
 import { useState } from "react";
 import { BatteryCharging, LockKeyhole } from "lucide-react";
-import { createAuthSession, loginPassword, loginUsername } from "../utils/auth.js";
+import { createAuthSession } from "../utils/auth.js";
 import { tikkieTeddieFooter } from "../utils/licenseGuard.js";
 
 export default function LoginScreen({ onLogin }) {
@@ -57,9 +57,6 @@ export default function LoginScreen({ onLogin }) {
           </button>
         </form>
 
-        <div className="mt-5 rounded-lg bg-[var(--blonde-soft)] p-3 text-xs font-semibold leading-5 text-[var(--marine-muted)]">
-          Demo credentials: {loginUsername} / {loginPassword}
-        </div>
         <p className="mt-5 text-center text-xs font-bold text-[var(--marine-muted)]">{tikkieTeddieFooter}</p>
       </section>
     </main>
