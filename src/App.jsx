@@ -4,13 +4,16 @@ import { BatteryCharging, CalendarDays, ChartNoAxesCombined, Map, PlugZap, Route
 import ChargingAnalysis from "./components/ChargingAnalysis.jsx";
 import DailyLog from "./components/DailyLog.jsx";
 import Forecast from "./components/Forecast.jsx";
+import LicenseLock from "./components/LicenseLock.jsx";
 import MonthlyDashboard from "./components/MonthlyDashboard.jsx";
 import RouteAnalysis from "./components/RouteAnalysis.jsx";
 import WeeklyDashboard from "./components/WeeklyDashboard.jsx";
 import DashboardCards from "./components/DashboardCards.jsx";
 import Charts from "./components/Charts.jsx";
 import { sampleTrips } from "./data/sampleData.js";
+import { appBrandPalette, paletteAuditSummary } from "./data/brandAudit.js";
 import { summarizeTrips } from "./utils/calculations.js";
+import { tikkieTeddieFooter, verifyTikkieTeddieLicense } from "./utils/licenseGuard.js";
 
 const storageKey = "ev-charge-daily-log-v1";
 
@@ -36,6 +39,11 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("daily");
   const [trips, setTrips] = useState(loadTrips);
   const summary = useMemo(() => summarizeTrips(trips), [trips]);
+  const licenseStatus = useMemo(() => verifyTikkieTeddieLicense(), []);
+
+  if (!licenseStatus.ok) {
+    return <LicenseLock status={licenseStatus} />;
+  }
 
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(trips));
@@ -115,6 +123,9 @@ export default function App() {
               <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
                 ข้อมูลถูกบันทึกใน Local Storage บนเครื่องนี้ สามารถเพิ่ม แก้ไข ลบรายการย้อนหลัง และดูกราฟได้ทันทีโดยไม่ต้องใช้ Backend
               </p>
+              <p className="mt-2 max-w-3xl text-xs leading-5 text-[var(--marine-muted)]">
+                Palette audit: {Object.values(appBrandPalette).join(" / ")}. {paletteAuditSummary.scope}
+              </p>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center sm:min-w-96">
               <div className="rounded-lg bg-[var(--sea-soft)] p-3">
@@ -143,7 +154,7 @@ export default function App() {
         {renderTab()}
       </main>
       <footer className="border-t border-[var(--blonde-line)] bg-white/80 px-4 py-5 text-center text-sm font-semibold text-[var(--marine-muted)]">
-        © 2026 TikkieTeddie Lab | V.1.0.0
+        {tikkieTeddieFooter}
       </footer>
     </div>
   );
