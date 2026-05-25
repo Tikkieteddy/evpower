@@ -104,6 +104,8 @@ export const summarizeTrips = (trips) => {
     kwhPerKm: safeDivide(totalKwh, totalDistance),
     drivingBahtPerKm: safeDivide(drivingCost, totalDistance),
     drivingKwhPerKm: safeDivide(drivingKwh, totalDistance),
+    avgKwhPerDay: safeDivide(totalKwh, dataDays),
+    avgDrivingKwhPerDay: safeDivide(drivingKwh, dataDays),
     avgCostPerDay: safeDivide(totalCost, dataDays),
     avgDistancePerDay: safeDivide(totalDistance, dataDays),
     avgBahtPerKwh,
