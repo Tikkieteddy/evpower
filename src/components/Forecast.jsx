@@ -26,9 +26,9 @@ export default function Forecast({ trips }) {
   const columns = [
     { key: "routeName", label: "เส้นทาง" },
     { key: "count", label: "จำนวนครั้ง" },
-    { key: "distance", label: "ระยะทางคาดการณ์", render: (row) => `${formatNumber(row.distance, 1)} กม.` },
-    { key: "kwh", label: "ไฟคาดการณ์", render: (row) => `${formatNumber(row.kwh, 1)} kWh` },
-    { key: "idleKwh", label: "ไฟจอดรอ", render: (row) => `${formatNumber(row.idleKwh, 1)} kWh` },
+    { key: "distance", label: "ระยะทางคาดการณ์", render: (row) => `${formatNumber(row.distance, 2)} กม.` },
+    { key: "kwh", label: "ไฟคาดการณ์", render: (row) => `${formatNumber(row.kwh, 2)} kWh` },
+    { key: "idleKwh", label: "ไฟจอดรอ", render: (row) => `${formatNumber(row.idleKwh, 2)} kWh` },
     { key: "cost", label: "ค่าชาร์จคาดการณ์", render: (row) => formatBaht(row.cost) },
   ];
 
@@ -43,7 +43,7 @@ export default function Forecast({ trips }) {
         <div className="grid gap-3 md:grid-cols-[220px_1fr]">
           <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
             จำนวนวันที่คาดว่าจะวิ่ง
-            <input className="input" type="number" min="1" value={expectedDays} onChange={(e) => setExpectedDays(e.target.value)} />
+            <input className="input" type="number" min="0.01" step="0.01" value={expectedDays} onChange={(e) => setExpectedDays(e.target.value)} />
           </label>
           <div className="grid gap-3">
             {rows.map((row) => (
@@ -53,7 +53,7 @@ export default function Forecast({ trips }) {
                     <option key={route} value={route}>{route}</option>
                   ))}
                 </select>
-                <input className="input" type="number" min="0" value={row.count} onChange={(e) => updateRow(row.id, "count", e.target.value)} />
+                <input className="input" type="number" min="0" step="0.01" value={row.count} onChange={(e) => updateRow(row.id, "count", e.target.value)} />
                 <button
                   type="button"
                   className="grid h-11 w-11 place-items-center rounded-lg border border-red-200 text-red-600 hover:bg-red-50"
@@ -76,10 +76,10 @@ export default function Forecast({ trips }) {
       </section>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-        <MetricCard title="ระยะทางรวมเดือนหน้า" value={`${formatNumber(forecast.totalDistance, 1)} กม.`} />
-        <MetricCard title="ไฟที่คาดว่าจะใช้" value={`${formatNumber(forecast.totalKwh, 1)} kWh`} tone="green" />
+        <MetricCard title="ระยะทางรวมเดือนหน้า" value={`${formatNumber(forecast.totalDistance, 2)} กม.`} />
+        <MetricCard title="ไฟที่คาดว่าจะใช้" value={`${formatNumber(forecast.totalKwh, 2)} kWh`} tone="green" />
         <MetricCard title="เงินค่าชาร์จคาดการณ์" value={formatBaht(forecast.totalCost)} tone="sky" />
-        <MetricCard title="ไฟจากการจอดรอ" value={`${formatNumber(forecast.totalIdleKwh, 1)} kWh`} hint={`${formatNumber(forecast.totalIdleMinutes, 0)} นาทีโดยประมาณ`} tone="green" />
+        <MetricCard title="ไฟจากการจอดรอ" value={`${formatNumber(forecast.totalIdleKwh, 2)} kWh`} hint={`${formatNumber(forecast.totalIdleMinutes, 2)} นาทีโดยประมาณ`} tone="green" />
         <MetricCard title="เฉลี่ยต่อกม." value={`${formatNumber(forecast.avgCostPerKm, 2)} บาท`} />
       </div>
 

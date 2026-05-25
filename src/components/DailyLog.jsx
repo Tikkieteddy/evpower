@@ -100,12 +100,12 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
   const columns = [
     { key: "date", label: "วันที่" },
     { key: "routeName", label: "เส้นทาง" },
-    { key: "distanceKm", label: "กม.", render: (row) => formatNumber(row.distanceKm, 1) },
+    { key: "distanceKm", label: "กม.", render: (row) => formatNumber(row.distanceKm, 2) },
     { key: "hasCharge", label: "ชาร์จ", render: (row) => (row.hasCharge ? "ใช่" : "ไม่") },
     { key: "chargerName", label: "เครื่องชาร์จ", render: (row) => row.chargerName || "-" },
     { key: "chargeCost", label: "บาท", render: (row) => formatBaht(row.chargeCost, 2) },
-    { key: "kwh", label: "kWh", render: (row) => formatNumber(row.kwh, 1) },
-    { key: "idleMinutes", label: "จอดรอ", render: (row) => `${formatNumber(row.idleMinutes, 0)} นาที` },
+    { key: "kwh", label: "kWh", render: (row) => formatNumber(row.kwh, 2) },
+    { key: "idleMinutes", label: "จอดรอ", render: (row) => `${formatNumber(row.idleMinutes, 2)} นาที` },
     { key: "idleKwh", label: "kWh จอดรอ", render: (row) => formatNumber(row.idleKwh, 2) },
     { key: "note", label: "หมายเหตุ", render: (row) => row.note || "-" },
     {
@@ -162,7 +162,7 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
           </label>
           <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
             ระยะทางที่วิ่ง (กม.)
-            <input className="input" type="number" min="0" step="0.1" value={form.distanceKm} onChange={(e) => updateField("distanceKm", e.target.value)} required />
+            <input className="input" type="number" min="0" step="0.01" value={form.distanceKm} onChange={(e) => updateField("distanceKm", e.target.value)} required />
           </label>
           <label className="mt-6 inline-flex min-h-11 items-center gap-3 rounded-lg border border-[var(--blonde-line)] bg-[var(--blonde-soft)] px-3 font-semibold text-[var(--marine-ink)]">
             <input type="checkbox" checked={form.hasCharge} onChange={(e) => updateField("hasCharge", e.target.checked)} />
@@ -189,11 +189,11 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
           ) : null}
           <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
             จำนวนไฟที่ได้ (kWh)
-            <input className="input" type="number" min="0" step="0.1" value={form.kwh} onChange={(e) => updateField("kwh", e.target.value)} disabled={!form.hasCharge} required={form.hasCharge} />
+            <input className="input" type="number" min="0" step="0.01" value={form.kwh} onChange={(e) => updateField("kwh", e.target.value)} disabled={!form.hasCharge} required={form.hasCharge} />
           </label>
           <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
             จอดรอเปิดแอร์ (นาที)
-            <input className="input" type="number" min="0" step="1" value={form.idleMinutes} onChange={(e) => updateField("idleMinutes", e.target.value)} placeholder="0" />
+            <input className="input" type="number" min="0" step="0.01" value={form.idleMinutes} onChange={(e) => updateField("idleMinutes", e.target.value)} placeholder="0.00" />
           </label>
           <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
             อัตราใช้ไฟตอนจอด (kWh/ชม.)
@@ -210,7 +210,7 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
                 className="input"
                 type="number"
                 min="0"
-                step="0.1"
+                step="0.01"
                 value={form.idleRateMode === "auto" ? formatNumber(autoIdleKwhPerHour, 2) : form.idleKwhPerHour}
                 onChange={(e) => updateField("idleKwhPerHour", e.target.value)}
                 disabled={form.idleRateMode === "auto"}

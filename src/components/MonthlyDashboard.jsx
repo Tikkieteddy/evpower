@@ -34,7 +34,7 @@ export default function MonthlyDashboard({ trips }) {
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard title="เส้นทางที่วิ่งบ่อยที่สุด" value={highlights.mostFrequentRoute} hint="นับจากจำนวนครั้งที่บันทึก" tone="green" />
         <MetricCard title="ใช้เงินเฉลี่ยสูงที่สุด" value={highlights.highestCostRoute} hint="วัดจากบาทต่อกิโลเมตร" />
-        <MetricCard title="ผลจากการจอดรอ" value={`${formatNumber(summary.totalIdleKwh, 1)} kWh`} hint={`ประมาณ ${formatNumber(summary.totalIdleMinutes, 0)} นาทีในเดือนนี้`} tone="green" trend="down" />
+        <MetricCard title="ผลจากการจอดรอ" value={`${formatNumber(summary.totalIdleKwh, 2)} kWh`} hint={`ประมาณ ${formatNumber(summary.totalIdleMinutes, 2)} นาทีในเดือนนี้`} tone="green" trend="down" />
       </div>
       <Charts trips={monthTrips} />
     </div>

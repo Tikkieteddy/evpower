@@ -13,14 +13,14 @@ export default function RouteAnalysis({ trips }) {
   const columns = [
     { key: "routeName", label: "ชื่อเส้นทาง" },
     { key: "count", label: "จำนวนครั้ง" },
-    { key: "avgDistance", label: "กม./ครั้ง", render: (row) => formatNumber(row.avgDistance, 1) },
-    { key: "totalDistance", label: "กม.รวม", render: (row) => formatNumber(row.totalDistance, 1) },
+    { key: "avgDistance", label: "กม./ครั้ง", render: (row) => formatNumber(row.avgDistance, 2) },
+    { key: "totalDistance", label: "กม.รวม", render: (row) => formatNumber(row.totalDistance, 2) },
     { key: "avgCost", label: "บาทเฉลี่ย", render: (row) => formatBaht(row.avgCost) },
     { key: "avgKwh", label: "kWh เฉลี่ย", render: (row) => formatNumber(row.avgKwh, 2) },
-    { key: "avgIdleMinutes", label: "จอดรอ/ครั้ง", render: (row) => `${formatNumber(row.avgIdleMinutes, 0)} นาที` },
+    { key: "avgIdleMinutes", label: "จอดรอ/ครั้ง", render: (row) => `${formatNumber(row.avgIdleMinutes, 2)} นาที` },
     { key: "avgIdleKwh", label: "kWh จอดรอ", render: (row) => formatNumber(row.avgIdleKwh, 2) },
     { key: "bahtPerKm", label: "บาท/กม.", render: (row) => formatNumber(row.bahtPerKm, 2) },
-    { key: "kwhPerKm", label: "kWh/กม.", render: (row) => formatNumber(row.kwhPerKm, 3) },
+    { key: "kwhPerKm", label: "kWh/กม.", render: (row) => formatNumber(row.kwhPerKm, 2) },
     {
       key: "efficiency",
       label: "ประเมิน",

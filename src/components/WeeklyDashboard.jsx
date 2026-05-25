@@ -35,10 +35,10 @@ export default function WeeklyDashboard({ trips }) {
 
       <DashboardCards summary={summary} />
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <MetricCard title="kWh ต่อกิโลเมตร" value={formatNumber(summary.kwhPerKm, 3)} hint="ไฟรวม ÷ ระยะทางรวม" tone="green" trend="down" />
+        <MetricCard title="kWh ต่อกิโลเมตร" value={formatNumber(summary.kwhPerKm, 2)} hint="ไฟรวม ÷ ระยะทางรวม" tone="green" trend="down" />
         <MetricCard title="ค่าไฟเฉลี่ยต่อ kWh" value={`${formatNumber(summary.avgBahtPerKwh, 2)} บาท`} hint="เงินรวม ÷ kWh รวม" tone="sky" />
         <MetricCard title="วันที่เดินทาง" value={`${summary.travelDays} วัน`} hint={`จาก ${summary.dataDays} วันที่มีข้อมูล`} />
-        <MetricCard title="เฉพาะการขับขี่" value={`${formatNumber(summary.drivingKwhPerKm, 3)} kWh/กม.`} hint={`ตัดไฟจอดรอออกประมาณ ${formatNumber(summary.totalIdleKwh, 1)} kWh`} tone="green" />
+        <MetricCard title="เฉพาะการขับขี่" value={`${formatNumber(summary.drivingKwhPerKm, 2)} kWh/กม.`} hint={`ตัดไฟจอดรอออกประมาณ ${formatNumber(summary.totalIdleKwh, 2)} kWh`} tone="green" />
       </div>
       <Charts trips={weekTrips} />
     </div>
