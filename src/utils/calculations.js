@@ -228,6 +228,8 @@ export const forecastNextMonth = (trips, forecastRows, expectedDays) => {
       const count = toNumber(row.count);
       return {
         routeName: row.routeName,
+        plannedDays: toNumber(row.plannedDays),
+        tripsPerDay: toNumber(row.tripsPerDay),
         count,
         distance: (route?.avgDistance || 0) * count,
         cost: (route?.avgCost || 0) * count,
