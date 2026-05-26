@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { Edit3, Plus, RotateCcw, Trash2 } from "lucide-react";
 import DataTable from "./DataTable.jsx";
+import RoutePresetManager from "./RoutePresetManager.jsx";
 import {
   chargerOptions,
   defaultIdleKwhPerHour,
@@ -10,10 +11,12 @@ import {
   getAutoIdleKwhPerHour,
   sortTrips,
 } from "../utils/calculations.js";
+import { getRoutePresets } from "../utils/routePresets.js";
 
 const blankForm = {
   date: new Date().toISOString().slice(0, 10),
   routeName: "",
+  routePresetId: "",
   distanceKm: "",
   hasCharge: false,
   chargerName: chargerOptions[0],
@@ -29,6 +32,7 @@ const blankForm = {
 export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
   const [form, setForm] = useState(blankForm);
   const [editingId, setEditingId] = useState(null);
+  const [routePresets, setRoutePresets] = useState(getRoutePresets);
 
   const sortedTrips = useMemo(() => sortTrips(trips).reverse(), [trips]);
   const autoIdleKwhPerHour = useMemo(() => getAutoIdleKwhPerHour(trips), [trips]);
@@ -47,6 +51,18 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
       }
       if (field === "idleMinutes" && current.idleRateMode === "auto") {
         next.idleKwhPerHour = autoIdleKwhPerHour;
+      }
+      if (field === "routePresetId") {
+        const preset = routePresets.find((route) => route.id === value);
+        next.routePresetId = value;
+        if (preset) {
+          next.routeName = preset.routeName;
+          next.distanceKm = String(preset.distanceKm);
+        }
+      }
+      if (field === "routeName") {
+        const matchingPreset = routePresets.find((route) => route.routeName === value);
+        next.routePresetId = matchingPreset?.id || "";
       }
       return next;
     });
@@ -83,6 +99,7 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
     setForm({
       date: trip.date,
       routeName: trip.routeName,
+      routePresetId: routePresets.find((route) => route.routeName === trip.routeName)?.id || "",
       distanceKm: String(trip.distanceKm),
       hasCharge: trip.hasCharge,
       chargerName: chargerOptions.includes(trip.chargerName) ? trip.chargerName : trip.chargerName ? "other" : chargerOptions[0],
@@ -136,6 +153,8 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
 
   return (
     <div className="grid gap-5">
+      <RoutePresetManager routes={routePresets} onChange={setRoutePresets} />
+
       <form onSubmit={submit} className="rounded-lg border border-[var(--blonde-line)] bg-white p-4 shadow-sm">
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div>
@@ -158,6 +177,14 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
           </label>
           <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
             ชื่อเส้นทาง
+            <select className="input" value={form.routePresetId} onChange={(e) => updateField("routePresetId", e.target.value)}>
+              <option value="">เลือกหรือพิมพ์เอง</option>
+              {routePresets.map((route) => (
+                <option key={route.id} value={route.id}>
+                  {route.routeName}
+                </option>
+              ))}
+            </select>
             <input className="input" value={form.routeName} onChange={(e) => updateField("routeName", e.target.value)} placeholder="เช่น บ้าน - ออฟฟิศ" required />
           </label>
           <label className="grid gap-1 text-sm font-semibold text-[var(--marine-ink)]">
