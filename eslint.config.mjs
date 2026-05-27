@@ -22,6 +22,7 @@ export default [
         window: "readonly",
         document: "readonly",
         localStorage: "readonly",
+        sessionStorage: "readonly",
         confirm: "readonly",
         crypto: "readonly",
       },
