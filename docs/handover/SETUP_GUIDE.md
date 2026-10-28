@@ -40,7 +40,7 @@ npm run build
 npm test
 ```
 
-`npm test` currently runs only the production build. There is no test framework or test file.
+`npm test` runs the Vitest unit tests (`src/**/*.test.js`) in the Asia/Bangkok timezone; `npm run test:watch` re-runs on change. Build is separate (`npm run build`).
 
 ## Documentation Commands
 

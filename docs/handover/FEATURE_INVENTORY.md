@@ -22,21 +22,25 @@ Status values are `Implemented`, `Partial`, `Planned`, `Deprecated`, or `Unknown
 | Charger analysis | Analytics | `ChargingAnalysis.jsx` | Implemented | charging records | distance association may mislead | P1 |
 | Forecast | Planning | `Forecast.jsx` | Implemented | route history | no confidence interval; sparse data risk | P1 |
 | Responsive shell/navigation | UX | `App.jsx`, `index.css` | Implemented | Tailwind breakpoints | mobile visual audit not completed | P2 |
-| Sample reset | Data management | `App.jsx` | Implemented | confirm dialog | destructive replacement; no backup | P1 |
+| Sample reset | Data management | `App.jsx` | Implemented | confirm dialog, `backupTrips` | copy kept in Local Storage; no restore UI yet | P2 |
+| Unreadable-data protection | Data management | `tripStorage.js`, `StorageNotice.jsx` | Implemented | Local Storage | restore needs stage 3 import | P1 |
+| Save-failure warning | Data management | `App.jsx`, `StorageNotice.jsx` | Implemented | Local Storage | - | P2 |
 
 ## Totals
 
-- Implemented: 16
+- Implemented: 18 (2 added 2026-10-28)
 - Partial: 3
 - Planned: 0 found in source
 - Deprecated: 0 found
 - Unknown features: 0 (repository ownership remains an architecture uncertainty, not a feature)
 
+## Tests
+
+Added 2026-10-28 (Vitest 4): `src/utils/calculations.test.js` (27) and `src/utils/storage.test.js` (15) and `src/utils/tripStorage.test.js` (13) cover every exported calculation helper, route presets and local auth/session. One test is an expected failure that pins the week-key timezone bug.
+
 ## Missing Tests
 
-- Calculation unit tests (division by zero, grouping, dates, forecasts)
-- Storage parsing/migration/error tests
-- Auth role/session tests
+- `App.jsx` / `StorageNotice.jsx` component behavior (logic covered by `tripStorage.test.js`; UI verified manually)
 - Form validation and CRUD component tests
 - Responsive and accessibility checks
 - E2E login-to-report flow

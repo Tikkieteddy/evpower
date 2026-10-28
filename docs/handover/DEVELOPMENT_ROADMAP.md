@@ -56,6 +56,8 @@ _Updated 2026-10-28 by Claude Code after takeover audit._
 
 ## P1 - Add Automated Test Baseline
 
+**Status 2026-10-28:** unit-test baseline done (Vitest, 42 tests, `npm test`). Remaining: component tests, E2E, CI.
+
 **Goal:** protect business formulas, persistence, and core flows.
 
 **Related files:** all `src/utils`, forms, `package.json`.
@@ -67,6 +69,8 @@ _Updated 2026-10-28 by Claude Code after takeover audit._
 **Verification:** CI run and mutation/boundary review.
 
 ## P1 - Backup, Export, Import, and Migration
+
+**Status 2026-10-28:** plan proposed in [`plans/EXPORT_BACKUP_PLAN.md`](plans/EXPORT_BACKUP_PLAN.md); awaiting owner approval.
 
 **Goal:** prevent silent loss of browser-local records.
 

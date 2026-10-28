@@ -23,7 +23,7 @@ There is no EV backend, API, relational database, cloud user store, file upload,
 | --- | --- | --- |
 | `npm run lint` | PASS | ESLint exit 0 |
 | `npm run build` | PASS with warning | JS chunk 651.83 kB, gzip 194.17 kB |
-| `npm test` | Build alias only | No test files exist |
+| `npm test` | PASS | Vitest: 54 passed + 1 expected fail (known week-key bug) |
 | `npm run docs:validate` | PASS | links, files, storage keys, secrets |
 | Desktop runtime | PASS | Codex, local Vite |
 | Mobile runtime 375 px | PASS | Claude, all 7 tabs, no horizontal overflow |
@@ -32,10 +32,10 @@ There is no EV backend, API, relational database, cloud user store, file upload,
 
 - Critical: the hard-coded default admin credential is in `src/utils/auth.js`, printed in `README.md`, and shipped in the deployed bundle of a **public** repository.
 - Critical: passwords and users are plaintext Local Storage data; authorization is client-controlled.
-- High: data is device/browser-specific and can be lost when site data is cleared; corrupted trip JSON is silently overwritten with sample data.
+- High: data is device/browser-specific and can be lost when site data is cleared (no export yet). Corrupted trip data is now copied before fallback (fixed 2026-10-28).
 - High: charged energy and trip consumption are conflated in analytics.
 - High: unrelated Next.js application files are tracked in the same repository (with real Google resource IDs and a fallback secret).
-- Medium: no automated tests or data schema migrations.
+- Medium: unit tests only (no component/E2E tests); no data schema migrations.
 - Medium: one large production JS chunk.
 - Medium: license guard is client code and can be bypassed by rebuilding source.
 - Low: week-key start/end dates are one day early in UTC+7 (labels correct).

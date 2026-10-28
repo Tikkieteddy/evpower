@@ -22,3 +22,8 @@ Tags/releases: NOT FOUND in the local Git repository.
 ## Unreleased (branch `docs/claude-takeover`, not committed)
 
 - 2026-10-28 Claude Code takeover: verified the Codex handover against source; corrected the `postcss.config.mjs` / `public/` boundary; documented the public default credential, the storage overwrite path and the week-key timezone shift; added `docs:build` / `docs:validate` scripts; dashboard is now generated from `docs/handover/data/project-status.json`; added `INITIAL_TAKEOVER_REPORT.md`. No application behavior changed.
+
+## Unreleased (branch `test/vitest-baseline`)
+
+- 2026-10-28 Added Vitest 4 unit tests for `calculations.js`, `routePresets.js` and `auth.js` (42 tests); `npm test` now runs them (was a build alias). Added `docs/handover/plans/EXPORT_BACKUP_PLAN.md` (proposal). No application behavior changed.
+- 2026-10-28 Export/Backup stage 1: `src/utils/tripStorage.js` + `StorageNotice.jsx` - unreadable trip data is copied to `ev-charge-daily-log-v1:corrupt-<hash>` before fallback (saving pauses if the copy fails), `null` no longer breaks rendering, sample reset keeps a `:before-sample-<timestamp>` copy, failed saves show a warning. 13 new tests. Existing storage keys/schemas unchanged.

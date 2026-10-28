@@ -44,6 +44,16 @@ Baseline: source at commit `5360d94` and local runtime audit on 2026-10-28. All 
 
 Desktop: centered max-width card with icon, title, username, password, error area, Log in button, footer. Mobile: same card fills available width inside 16 px page padding. Error state appears inline above the button. Loading state: NOT FOUND. Password recovery: NOT FOUND.
 
+## Storage Notice (CURRENT, added 2026-10-28) - top of `<main>`, any tab
+
+```text
+[! Unreadable trip data (reason) - copy saved at <key> ... ] [Download original] [Close]
+[! Could not copy - saving paused ...]                       [Download original] [Downloaded, continue]
+[! Saving to the browser failed (storage full/disabled)]
+```
+
+Red alert panel (`role="alert"`); buttons wrap under the text on mobile (verified at 375 px, no horizontal overflow). Hidden when there is nothing to report.
+
 ## 2. Daily Log - `/` tab `daily`
 
 ```text

@@ -50,6 +50,14 @@ Only decisions supported by repository evidence are listed.
 
 **Consequence:** dashboard data has one editable source and can be rebuilt offline with Node only; narrative Markdown remains hand-maintained.
 
+## ADR-007 - Vitest for Unit Tests
+
+**Status:** Accepted 2026-10-28.
+
+**Evidence:** `vitest.config.js`, `src/**/*.test.js`, `package.json` `test` script.
+
+**Consequence:** shares the Vite toolchain, no DOM library needed for utils. Vitest 4 chosen because Vitest 3 pulls a `tinypool` version with critical advisories.
+
 ## Open Decisions
 
 - Rotation/removal of the public default credential
@@ -58,5 +66,5 @@ Only decisions supported by repository evidence are listed.
 - Correct source of consumed-energy data
 - Ownership/removal of unrelated Next.js files
 - Export format and schema migration policy
-- Test and CI toolchain
+- CI provider (GitHub Actions vs. Vercel checks only)
 

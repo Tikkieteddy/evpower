@@ -28,7 +28,8 @@ evpower-work/
 |   |   |-- Charts.jsx
 |   |   |-- DashboardCards.jsx
 |   |   |-- MetricCard.jsx
-|   |   `-- DataTable.jsx
+|   |   |-- DataTable.jsx
+|   |   `-- StorageNotice.jsx  # Unreadable/unsaved data warning
 |   |-- data/
 |   |   |-- sampleData.js      # Seven starter trips
 |   |   `-- brandAudit.js      # Palette reference list
@@ -36,6 +37,8 @@ evpower-work/
 |       |-- calculations.js    # Analytics and forecast formulas
 |       |-- auth.js            # Client-side users/session
 |       |-- routePresets.js    # Preset persistence
+|       |-- tripStorage.js     # Non-destructive trip load/save/backup
+|       |-- *.test.js          # Vitest unit tests
 |       `-- licenseGuard.js    # Integrity check
 |-- docs/handover/             # Handover documentation (data/project-status.json = dashboard source)
 `-- scripts/docs/              # Dashboard generator + documentation validator

@@ -28,7 +28,8 @@ Source: [`diagrams/system-architecture.mmd`](diagrams/system-architecture.mmd).
 | Analytics | `src/utils/calculations.js` | normalization, grouping, metrics, forecast |
 | Views | weekly/monthly/route/charging/forecast components | presentation and filters |
 | Charts | `Charts.jsx` | bar, line, pie visualization |
-| Persistence | `auth.js`, `routePresets.js`, `App.jsx` | Local/Session Storage access |
+| Persistence | `tripStorage.js`, `auth.js`, `routePresets.js` | Local/Session Storage access; trips are never overwritten without a copy |
+| Warnings | `StorageNotice.jsx` | unreadable-data and save-failure banner |
 | Integrity | `licenseGuard.js`, `brandAudit.js` | client-side credit/version/palette equality checks |
 
 ## Data Flow
