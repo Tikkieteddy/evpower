@@ -33,7 +33,7 @@ Array of `{id, routeName, distanceKm}`. Selecting a preset copies route name and
 
 ### `tikkieteddielab-evpower-users-v1`
 
-Array of `{username, password, role, createdAt}`. Password is plaintext. This is a security risk and must never be migrated as plaintext to production storage.
+Array of `{username, password, role, createdAt}` (schema unchanged). Password is plaintext. Since 2026-10-28 a session whose user still has the seeded admin password gets `mustChangePassword: true` (computed on read, not stored), and no user can be given the seeded password again. This is a security risk and must never be migrated as plaintext to production storage.
 
 ## Session Storage Key
 

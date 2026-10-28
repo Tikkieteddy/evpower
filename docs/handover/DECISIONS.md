@@ -58,9 +58,16 @@ Only decisions supported by repository evidence are listed.
 
 **Consequence:** shares the Vite toolchain, no DOM library needed for utils. Vitest 4 chosen because Vitest 3 pulls a `tinypool` version with critical advisories.
 
+## ADR-008 - Forced Change of the Seeded Admin Password
+
+**Status:** Accepted 2026-10-28 (owner approved).
+
+**Evidence:** `isDefaultCredential` / `changeOwnPassword` in `src/utils/auth.js`; `ChangePasswordScreen.jsx`; flag recomputed from the user list on every session read.
+
+**Consequence:** the public seeded password only works once per browser to set a new one; no storage key or schema change; still a client-side gate, not authentication.
+
 ## Open Decisions
 
-- Rotation/removal of the public default credential
 
 - Offline personal tool versus secure multi-user product
 - Correct source of consumed-energy data

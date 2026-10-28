@@ -5,6 +5,7 @@ Status values are `Implemented`, `Partial`, `Planned`, `Deprecated`, or `Unknown
 | Feature | Module | Route / File | Status | Dependencies | Issues | Priority |
 | --- | --- | --- | --- | --- | --- | --- |
 | Login gate | Authentication | `/`, `auth.js`, `LoginScreen.jsx` | Partial | Session Storage | plaintext client credentials; bypassable | P0 |
+| Forced change of default password | Authentication | `auth.js`, `ChangePasswordScreen.jsx` | Implemented | Local Storage users | per browser; client-side only | P1 |
 | Local user management | Authentication | `/` Users tab | Partial | Local Storage | device-only; client role checks | P0 |
 | License/brand integrity state | Integrity | `licenseGuard.js`, `LicenseLock.jsx` | Partial | `brandAudit.js` | bypassable at source/build level | P2 |
 | Daily trip create | Daily Log | `DailyLog.jsx` | Implemented | React state | browser validation only | P1 |
@@ -28,7 +29,7 @@ Status values are `Implemented`, `Partial`, `Planned`, `Deprecated`, or `Unknown
 
 ## Totals
 
-- Implemented: 18 (2 added 2026-10-28)
+- Implemented: 19 (3 added 2026-10-28)
 - Partial: 3
 - Planned: 0 found in source
 - Deprecated: 0 found

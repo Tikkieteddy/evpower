@@ -147,3 +147,15 @@ Branch `docs/claude-takeover` from `master` @ `5360d94` (== `origin/master`, con
 | Production smoke test | PASS | login screen renders, footer `V.1.0.0`, no console errors, no storage banner |
 | Production logged-in tabs | NOT VERIFIED | did not log in to production (real environment); all tabs verified locally |
 | Local `master` | PASS | fast-forwarded to `520c3d8`; `npm test` 54 passed + 1 expected fail |
+
+## Forced Default-Password Change (2026-10-28, branch `fix/force-default-password-change`)
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| `npm test` | PASS | 63 passed + 1 expected fail (9 new auth tests) |
+| `npm run lint` / `npm run build` / `npm run docs:validate` | PASS | README credential warning cleared |
+| Browser: login with seeded password | PASS | "ตั้งรหัสผ่านใหม่" screen, no tabs rendered |
+| Browser: mismatched confirmation | PASS | inline error, stays on screen |
+| Browser: successful change | PASS | dashboard opens; users list and 7 trips unchanged |
+| Seeded password rejected after change | UNIT ONLY | covered by `storage.test.js` |
+| Test data | CLEANED | local test origin users key reset |

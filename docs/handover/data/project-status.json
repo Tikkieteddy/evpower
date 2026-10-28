@@ -4,13 +4,13 @@
     "project": "EV Charge Daily Calculator",
     "packageVersion": "1.0.0",
     "appFooterVersion": "V.1.0.0",
-    "docsVersion": "V.1.4",
+    "docsVersion": "V.1.5",
     "dashboardFooter": "© 2026 ttdLab | V.1",
     "repository": "https://github.com/Tikkieteddy/evpower",
     "repositoryVisibility": "Public (GitHub API returned 200 without authentication on 2026-10-28)",
     "baselineBranch": "master",
     "baselineCommit": "5360d94",
-    "workingBranch": "master @ 520c3d8 (deployed)",
+    "workingBranch": "fix/force-default-password-change (PR pending)",
     "productionUrl": "https://evpower-beta.vercel.app",
     "lastUpdated": "2026-10-28",
     "maintainer": "Claude Code (takeover from OpenAI Codex)"
@@ -29,7 +29,7 @@
     {
       "name": "npm test",
       "status": "pass",
-      "detail": "Vitest 4: 54 passed + 1 expected fail (known week-key bug)"
+      "detail": "Vitest 4: 63 passed + 1 expected fail (known week-key bug)"
     },
     {
       "name": "Mobile 375px runtime",
@@ -132,7 +132,7 @@
       "module": "Authentication",
       "file": "src/utils/auth.js",
       "status": "Partial",
-      "issue": "Plaintext client credentials; default credential is public in repo",
+      "issue": "Plaintext client credentials; bypassable (seeded password now forces a change)",
       "priority": "P0"
     },
     {
@@ -142,6 +142,14 @@
       "status": "Partial",
       "issue": "Device-only; client role checks",
       "priority": "P0"
+    },
+    {
+      "name": "Forced change of default password",
+      "module": "Authentication",
+      "file": "src/components/ChangePasswordScreen.jsx",
+      "status": "Implemented",
+      "issue": "Per browser; client-side only",
+      "priority": "P1"
     },
     {
       "name": "License/brand integrity",
@@ -367,11 +375,6 @@
   "issues": [
     {
       "severity": "Critical",
-      "title": "Default admin credential is public",
-      "detail": "Hard-coded in src/utils/auth.js, printed in README.md, shipped in the deployed JS bundle, and the repository is public. Anyone can log in to any browser that still uses the default."
-    },
-    {
-      "severity": "Critical",
       "title": "Plaintext client-side authentication",
       "detail": "Users/passwords/roles live in Local Storage; not a security boundary."
     },
@@ -392,6 +395,11 @@
     },
     {
       "severity": "Medium",
+      "title": "Seeded admin password is public (mitigated)",
+      "detail": "Still in source/Git history/bundle, but data is per-browser so it only exposes data on a device someone else can use. Reassessed from Critical. Fix on branch fix/force-default-password-change: forced change on first login, README cleaned."
+    },
+    {
+      "severity": "Medium",
       "title": "No component/E2E tests",
       "detail": "Unit tests cover utils (npm test); UI flows and CI are untested."
     },
@@ -399,6 +407,11 @@
       "severity": "Medium",
       "title": "Large bundle",
       "detail": "Single 652 kB JS chunk (Recharts)."
+    },
+    {
+      "severity": "Medium",
+      "title": "Dependency advisories",
+      "detail": "npm audit: 10 pre-existing advisories in the Vite/PostCSS/esbuild/babel toolchain (build-time). Try npm audit fix (non-force)."
     },
     {
       "severity": "Low",
@@ -411,21 +424,16 @@
       "detail": "DailyLog blankForm uses toISOString(); before 07:00 Bangkok time the date field pre-fills yesterday."
     },
     {
-      "severity": "Medium",
-      "title": "Dependency advisories",
-      "detail": "npm audit: 10 pre-existing advisories in the Vite/PostCSS/esbuild/babel toolchain (build-time). Try npm audit fix (non-force)."
-    },
-    {
       "severity": "Low",
       "title": "README outdated",
-      "detail": "Says session is in Local Storage (code uses Session Storage); project structure list incomplete."
+      "detail": "Project structure list incomplete (Session Storage wording fixed on fix/force-default-password-change)."
     }
   ],
   "roadmap": [
     {
       "priority": "P0",
-      "title": "Rotate/remove public default credential",
-      "status": "Needs owner decision"
+      "title": "Force change of public default password",
+      "status": "Done on branch — PR pending"
     },
     {
       "priority": "P0",
@@ -459,6 +467,11 @@
     }
   ],
   "updates": [
+    {
+      "date": "2026-10-28",
+      "who": "Claude Code",
+      "text": "Seeded admin password now forces a password change on first login; README no longer prints it; risk reassessed Critical → Medium. Branch fix/force-default-password-change (PR pending)."
+    },
     {
       "date": "2026-10-28",
       "who": "Owner + Claude Code",
