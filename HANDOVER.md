@@ -6,9 +6,9 @@
 - Package version: `1.0.0`
 - UI footer version: `V.1.0.0`
 - Repository: `https://github.com/Tikkieteddy/evpower` (**public**)
-- Branch: `master` (== `origin/master` @ `520c3d8`, deployed to production 2026-10-28)
+- Branch: `master` (== `origin/master` @ `6ce2634`, deployed to production 2026-10-28)
 - Codex audit baseline: `5360d94` (`Require session login gate`)
-- Claude changes: PR #1 (docs) and PR #2 (tests + data protection), both merged
+- Claude changes: PR #1 (docs), PR #2 (tests + data protection), PR #3 (forced default-password change), all merged
 - Handover: OpenAI Codex -> Claude Code, 2026-10-28 (Asia/Bangkok)
 - Production URL supplied by owner: `https://evpower-beta.vercel.app`
 
@@ -24,14 +24,14 @@ There is no EV backend, API, relational database, cloud user store, file upload,
 | --- | --- | --- |
 | `npm run lint` | PASS | ESLint exit 0 |
 | `npm run build` | PASS with warning | JS chunk 651.83 kB, gzip 194.17 kB |
-| `npm test` | PASS | Vitest: 54 passed + 1 expected fail (known week-key bug) |
+| `npm test` | PASS | Vitest: 63 passed + 1 expected fail (known week-key bug) |
 | `npm run docs:validate` | PASS | links, files, storage keys, secrets |
 | Desktop runtime | PASS | Codex, local Vite |
 | Mobile runtime 375 px | PASS | Claude, all 7 tabs, no horizontal overflow |
 
 ## Handover Risks
 
-- Medium (reassessed 2026-10-28; was rated Critical): the seeded admin password is public (source, Git history, bundle), but data is per-browser, so it only exposes data on a device someone else can use. Mitigated by a forced password change on first login and removal from README (branch `fix/force-default-password-change`).
+- Medium (reassessed 2026-10-28; was rated Critical): the seeded admin password is public (source, Git history, bundle), but data is per-browser, so it only exposes data on a device someone else can use. Mitigated by a forced password change on first login and removal from README (PR #3, live since 2026-10-28).
 - High: passwords and users are plaintext Local Storage data; authorization is client-controlled.
 - High: data is device/browser-specific and can be lost when site data is cleared (no export yet). Corrupted trip data is now copied before fallback (fixed 2026-10-28).
 - High: charged energy and trip consumption are conflated in analytics.
@@ -47,4 +47,4 @@ Use [DOCUMENT_INDEX.md](DOCUMENT_INDEX.md) as the canonical map. The interactive
 
 ## Change Control
 
-PR #1 added documentation, docs tooling and a `.gitignore` entry (no app change). PR #2 added unit tests and the stage-1 data protection (`tripStorage.js`, `StorageNotice.jsx`, `App.jsx`) without changing existing storage keys or schemas. Both were merged and pushed with explicit owner approval; Vercel deployed `520c3d8`. Future commits, pushes, merges and deploys still need explicit owner approval.
+PR #1 added documentation, docs tooling and a `.gitignore` entry (no app change). PR #2 added unit tests and the stage-1 data protection (`tripStorage.js`, `StorageNotice.jsx`, `App.jsx`) without changing existing storage keys or schemas. PR #3 added the forced change of the seeded admin password (`auth.js`, `ChangePasswordScreen.jsx`) and cleaned the README, again without storage key/schema changes. All three were merged with explicit owner approval; Vercel deployed `6ce2634`. Future commits, pushes, merges and deploys still need explicit owner approval.

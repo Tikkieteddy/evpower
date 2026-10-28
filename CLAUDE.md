@@ -92,7 +92,7 @@ Vercel project name is `evpower`; public URL reported by the owner is `https://e
 
 ## Current Priorities
 
-1. Default credential: forced change on first login + README cleanup done on `fix/force-default-password-change` (PR pending owner merge).
+1. Default credential: forced change on first login + README cleanup live since PR #3 (`6ce2634`). Remaining: real auth needs a backend (see 2).
 2. Owner decision: offline personal tool vs. secure multi-user product.
 3. Owner decision: fate of unrelated Next.js files.
 4. Export/Backup plan ([EXPORT_BACKUP_PLAN.md](docs/handover/plans/EXPORT_BACKUP_PLAN.md)): stage 1 done; stages 2-3 await answers to section 6.

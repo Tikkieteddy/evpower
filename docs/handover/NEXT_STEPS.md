@@ -4,14 +4,14 @@ _Updated 2026-10-28 after PR #1 and PR #2 were merged to `master` (`520c3d8`) an
 
 ## Waiting on the Owner
 
-1. Review/merge the PR for `fix/force-default-password-change` (forced change of the default password, README cleanup).
-2. Choose offline-personal vs. secure multi-user architecture.
-3. Decide the fate of the unrelated Next.js files (`src/app/**`, `src/lib/**`, Next config, `.env.example`, `public/TNN_A.jpg`).
-4. Export/Backup stages 2-3: answer the questions in section 6 of [`plans/EXPORT_BACKUP_PLAN.md`](plans/EXPORT_BACKUP_PLAN.md) (stage 1 done).
+1. Choose offline-personal vs. secure multi-user architecture.
+2. Decide the fate of the unrelated Next.js files (`src/app/**`, `src/lib/**`, Next config, `.env.example`, `public/TNN_A.jpg`).
+3. Export/Backup stages 2-3: answer the questions in section 6 of [`plans/EXPORT_BACKUP_PLAN.md`](plans/EXPORT_BACKUP_PLAN.md) (stage 1 done).
 
 ## Done 2026-10-28
 
 - Handover docs + docs tooling merged (PR #1).
+- Forced change of the seeded admin password + README cleanup merged and deployed (PR #3, `6ce2634`).
 - Vitest unit tests (55) and `npm test` now runs them (PR #2).
 - Export/Backup plan written; stage 1 (unreadable-data protection, safe sample reset, save-failure warning) implemented and tested (PR #2), deployed to production 2026-10-28.
 

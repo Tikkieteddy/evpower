@@ -159,3 +159,14 @@ Branch `docs/claude-takeover` from `master` @ `5360d94` (== `origin/master`, con
 | Browser: successful change | PASS | dashboard opens; users list and 7 trips unchanged |
 | Seeded password rejected after change | UNIT ONLY | covered by `storage.test.js` |
 | Test data | CLEANED | local test origin users key reset |
+
+## PR #3 Merge and Deploy (2026-10-28)
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| PR #3 merged | PASS | merge commit `6ce2634`; checks 2/2 SUCCESS, mergeable CLEAN beforehand |
+| Vercel deployment | PASS | commit status `success`; live in ~20 s |
+| Production serves new code | PASS | live bundle `index-bSk9LJ2r.js` contains the set-password screen |
+| Production smoke test | PASS | login screen renders, no console errors |
+| Forced change on production | NOT VERIFIED | did not log in to production; verified on local dev origin |
+| Local `master` | PASS | fast-forwarded to `6ce2634`; `npm test` 63 passed + 1 expected fail |

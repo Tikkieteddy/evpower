@@ -4,6 +4,7 @@ This is reconstructed from Git commit subjects; it is not a claim of semantic re
 
 | Commit | Change |
 | --- | --- |
+| `6ce2634` | Merge PR #3: force a password change when the seeded admin password is used |
 | `520c3d8` | Merge PR #2: Vitest unit tests + trip data overwrite protection |
 | `d8db83c` | Merge PR #1: project handover docs and docs tooling |
 | `5360d94` | Require session login gate |
@@ -30,6 +31,6 @@ Tags/releases: NOT FOUND in the local Git repository.
 - 2026-10-28 Added Vitest 4 unit tests for `calculations.js`, `routePresets.js` and `auth.js` (42 tests, 55 with stage 1); `npm test` now runs them (was a build alias). Added `docs/handover/plans/EXPORT_BACKUP_PLAN.md` (proposal). No application behavior changed.
 - 2026-10-28 Export/Backup stage 1: `src/utils/tripStorage.js` + `StorageNotice.jsx` - unreadable trip data is copied to `ev-charge-daily-log-v1:corrupt-<hash>` before fallback (saving pauses if the copy fails), `null` no longer breaks rendering, sample reset keeps a `:before-sample-<timestamp>` copy, failed saves show a warning. 13 new tests. Existing storage keys/schemas unchanged.
 
-## Unreleased - branch `fix/force-default-password-change`
+## 2026-10-28 - PR #3 `fix/force-default-password-change` (merged `6ce2634`, commit `f8a47e8`, deployed)
 
 - 2026-10-28 Signing in with the seeded admin password now requires setting a new one (min 8 chars) before the dashboard opens (`ChangePasswordScreen.jsx`, `changeOwnPassword`). The seeded password can no longer be assigned to any user. README no longer prints it and now says the session is in Session Storage. Risk reassessed from Critical to Medium. No storage key/schema change; existing users and trips are kept. 9 new tests.
