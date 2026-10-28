@@ -12,12 +12,12 @@ import UserManagement from "./components/UserManagement.jsx";
 import WeeklyDashboard from "./components/WeeklyDashboard.jsx";
 import DashboardCards from "./components/DashboardCards.jsx";
 import Charts from "./components/Charts.jsx";
+import StorageNotice from "./components/StorageNotice.jsx";
 import { sampleTrips } from "./data/sampleData.js";
 import { summarizeTrips } from "./utils/calculations.js";
 import { clearAuthSession, readAuthSession } from "./utils/auth.js";
 import { tikkieTeddieFooter, verifyTikkieTeddieLicense } from "./utils/licenseGuard.js";
-
-const storageKey = "ev-charge-daily-log-v1";
+import { backupTrips, loadTrips, saveTrips } from "./utils/tripStorage.js";
 
 const tabs = [
   { id: "daily", label: "Daily Log", icon: CalendarDays },
@@ -29,25 +29,22 @@ const tabs = [
   { id: "users", label: "Users", icon: Users },
 ];
 
-function loadTrips() {
-  try {
-    const saved = localStorage.getItem(storageKey);
-    return saved ? JSON.parse(saved) : sampleTrips;
-  } catch {
-    return sampleTrips;
-  }
-}
-
 export default function App() {
   const [activeTab, setActiveTab] = useState("daily");
-  const [trips, setTrips] = useState(loadTrips);
+  const [initialLoad] = useState(() => loadTrips({ fallback: sampleTrips }));
+  const [trips, setTrips] = useState(initialLoad.trips);
+  const [recovery, setRecovery] = useState(initialLoad.recovery);
+  // Unreadable data that could not be copied must not be overwritten until the user has downloaded it.
+  const [persistBlocked, setPersistBlocked] = useState(Boolean(initialLoad.recovery && !initialLoad.recovery.backupSaved));
+  const [saveFailed, setSaveFailed] = useState(false);
   const [authSession, setAuthSession] = useState(readAuthSession);
   const summary = useMemo(() => summarizeTrips(trips), [trips]);
   const licenseStatus = useMemo(() => verifyTikkieTeddieLicense(), []);
 
   useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(trips));
-  }, [trips]);
+    if (persistBlocked) return;
+    setSaveFailed(!saveTrips(trips));
+  }, [trips, persistBlocked]);
 
   if (!licenseStatus.ok) {
     return <LicenseLock status={licenseStatus} />;
@@ -71,9 +68,12 @@ export default function App() {
   };
 
   const resetSample = () => {
-    if (confirm("โหลดข้อมูลตัวอย่าง 7 วันและแทนที่ข้อมูลปัจจุบันใช่ไหม?")) {
-      setTrips(sampleTrips);
+    if (!confirm("โหลดข้อมูลตัวอย่าง 7 วันและแทนที่ข้อมูลปัจจุบันใช่ไหม? ระบบจะเก็บสำเนาข้อมูลปัจจุบันไว้ในเครื่องก่อน")) return;
+    if (!backupTrips(trips, "before-sample").ok) {
+      window.alert("เก็บสำเนาข้อมูลปัจจุบันไม่สำเร็จ จึงยกเลิกการโหลดข้อมูลตัวอย่าง");
+      return;
     }
+    setTrips(sampleTrips);
   };
 
   const logout = () => {
@@ -136,6 +136,16 @@ export default function App() {
       </header>
 
       <main className="mx-auto grid w-full max-w-7xl gap-5 px-4 py-5">
+        <StorageNotice
+          recovery={recovery}
+          persistBlocked={persistBlocked}
+          saveFailed={saveFailed}
+          onDismiss={() => setRecovery(null)}
+          onContinue={() => {
+            setPersistBlocked(false);
+            setRecovery(null);
+          }}
+        />
         <section className="rounded-lg border border-[var(--blonde-line)] bg-white p-4 shadow-sm">
           <div className="flex flex-col justify-between gap-4 xl:flex-row xl:items-end">
             <div>

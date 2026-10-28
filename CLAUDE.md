@@ -26,12 +26,13 @@ The active EV app is the import graph rooted at `src/main.jsx`, plus `postcss.co
 
 - Functional React components and hooks.
 - Shared analytics stay in `src/utils/calculations.js`.
-- Browser persistence helpers stay in `src/utils/`.
+- Browser persistence helpers stay in `src/utils/`; trips go through `tripStorage.js` (never write `ev-charge-daily-log-v1` directly).
 - Reuse `MetricCard`, `DataTable`, and CSS variables in `src/index.css`.
 - Numeric inputs use `step="0.01"`; calculation output uses `formatNumber`/`formatBaht`.
 - Keep Thai user-facing copy and existing English tab labels consistent.
 - Preserve `tikkieteddielab` copyright/footer requirements unless the owner explicitly changes licensing.
 - Add tests for calculation or persistence changes before widening the feature surface.
+- Tests live next to the code as `src/**/*.test.js` (Vitest, Node environment, in-memory Web Storage stub). Known bugs are pinned with `it.fails` - remove `.fails` when fixing them. Never assert or print the default credential in tests.
 
 ## Commands
 
@@ -40,12 +41,13 @@ npm install
 npm run dev            # http://127.0.0.1:5173
 npm run lint
 npm run build
-npm test               # currently only runs the build
+npm test               # Vitest unit tests (src/**/*.test.js, TZ=Asia/Bangkok)
+npm run test:watch     # Vitest watch mode
 npm run docs:build     # regenerate docs/handover/HANDOVER_DASHBOARD.html
 npm run docs:validate  # links, referenced files, storage keys, secrets, dashboard freshness
 ```
 
-Verified 2026-10-28 (Claude): lint PASS, build PASS (652 kB chunk warning), docs:validate PASS, mobile 375 px runtime PASS.
+Verified 2026-10-28 (Claude): test PASS (54 + 1 expected fail), lint PASS, build PASS (652 kB chunk warning), docs:validate PASS, mobile 375 px runtime PASS.
 
 ## Documentation System
 
@@ -93,8 +95,8 @@ Vercel project name is `evpower`; public URL reported by the owner is `https://e
 1. Owner decision: rotate/remove the public default credential (README, `auth.js`, deployed bundle).
 2. Owner decision: offline personal tool vs. secure multi-user product.
 3. Owner decision: fate of unrelated Next.js files.
-4. Add Vitest unit tests for `calculations.js` and storage helpers.
-5. Export/import/backup and non-destructive storage fallback.
+4. Export/Backup plan ([EXPORT_BACKUP_PLAN.md](docs/handover/plans/EXPORT_BACKUP_PLAN.md)): stage 1 done; stages 2-3 await answers to section 6.
+5. Component/E2E tests (unit baseline done 2026-10-28).
 6. Fix energy-accounting semantics (charged vs consumed kWh).
 7. Code-split Recharts/dashboard views.
 

@@ -111,3 +111,27 @@ Branch `docs/claude-takeover` from `master` @ `5360d94` (== `origin/master`, con
 | Secrets in Git history (token/key patterns) | PASS | none found; default app credential and Google resource IDs are present (reported) |
 | PDF | VERIFIED opens | 15 A4 pages; kept as the Codex V.1 snapshot, some statements superseded |
 | Vercel dashboard/env/logs | NOT VERIFIED | no access from this machine |
+
+## Unit Test Baseline (2026-10-28, branch `test/vitest-baseline`)
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| `npm test` | PASS | Vitest 4.1.12: 41 passed, 1 expected fail (`getWeekKey` start date) |
+| Mutation check | PASS | Injected 2 formula bugs in `calculations.js`; 4 tests failed; file restored |
+| `npm run lint` / `npm run build` | PASS | build unchanged (tests are not bundled) |
+| `npm audit` | UNCHANGED | 10 pre-existing advisories (Vite/PostCSS/esbuild/babel chain); Vitest 3 would have added 2 critical (`tinypool`), so Vitest 4 was used |
+| New finding | Low | Daily Log default date uses `toISOString()` - before 07:00 Bangkok time it pre-fills yesterday |
+
+## Export/Backup Stage 1 (2026-10-28, branch `test/vitest-baseline`)
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| `npm test` | PASS | 54 passed + 1 expected fail (13 new in `tripStorage.test.js`) |
+| `npm run lint` / `npm run build` | PASS | |
+| Browser: invalid JSON | PASS | copy at `:corrupt-<hash>` equals original; banner shown; exactly 1 backup under StrictMode |
+| Browser: `null` value | PASS | renders with banner (previously crashed) |
+| Browser: sample reset | PASS | `:before-sample-<ts>` holds previous 7 trips |
+| Browser: storage full | PASS | original main value untouched; save-failure banner shown |
+| Browser: mobile 375 px | PASS | banner wraps, no horizontal overflow |
+| Copy-failure blocking path | UNIT ONLY | `loadTrips` reports `backupSaved:false`; App blocking verified by code review, not in browser |
+| Test data | CLEANED | only the in-app browser test origin (127.0.0.1:5180) was used; test keys removed |
