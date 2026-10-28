@@ -10,11 +10,14 @@ import {
 import {
   addUser,
   authStorageKey,
+  changeOwnPassword,
   clearAuthSession,
   createAuthSession,
   deleteUser,
   getUsers,
+  loginPassword,
   loginUsername,
+  minPasswordLength,
   readAuthSession,
   updateUserPassword,
   usersStorageKey,
@@ -144,5 +147,63 @@ describe("local users and session gate", () => {
   it("refuses to delete the default admin", () => {
     expect(deleteUser(loginUsername).ok).toBe(false);
     expect(getUsers()).toHaveLength(1);
+  });
+});
+
+describe("forced change of the default password", () => {
+  // Uses the imported constant only as input; the value is never asserted or printed.
+  const signInAsDefaultAdmin = () => createAuthSession(loginUsername, loginPassword);
+  const newPassword = "new-admin-pass-1";
+
+  it("flags a session that signed in with the default password", () => {
+    expect(signInAsDefaultAdmin().session.mustChangePassword).toBe(true);
+    expect(readAuthSession().mustChangePassword).toBe(true);
+  });
+
+  it("does not flag other users", () => {
+    addUser({ username: "driver", password: "test-pass-1" });
+    expect(createAuthSession("driver", "test-pass-1").session.mustChangePassword).toBe(false);
+  });
+
+  it("recomputes the flag from the user list, so editing the session cannot skip it", () => {
+    signInAsDefaultAdmin();
+    const tampered = { ...JSON.parse(sessionStorage.getItem(authStorageKey)), mustChangePassword: false };
+    sessionStorage.setItem(authStorageKey, JSON.stringify(tampered));
+    expect(readAuthSession().mustChangePassword).toBe(true);
+  });
+
+  it("changes the password and clears the flag", () => {
+    signInAsDefaultAdmin();
+    const result = changeOwnPassword(loginUsername, loginPassword, newPassword);
+    expect(result.ok).toBe(true);
+    expect(result.session.mustChangePassword).toBe(false);
+    expect(readAuthSession().mustChangePassword).toBe(false);
+    expect(signInAsDefaultAdmin().ok).toBe(false);
+    expect(createAuthSession(loginUsername, newPassword).ok).toBe(true);
+  });
+
+  it("keeps other users and their passwords", () => {
+    addUser({ username: "driver", password: "test-pass-1" });
+    signInAsDefaultAdmin();
+    changeOwnPassword(loginUsername, loginPassword, newPassword);
+    expect(getUsers().map((u) => u.username)).toEqual([loginUsername, "driver"]);
+    expect(createAuthSession("driver", "test-pass-1").ok).toBe(true);
+  });
+
+  it.each([
+    ["the current password is wrong", (current) => [current + "x", newPassword]],
+    ["the new password is too short", (current) => [current, "x".repeat(minPasswordLength - 1)]],
+    ["the new password equals the default", (current) => [current, loginPassword]],
+  ])("rejects the change when %s", (_, args) => {
+    signInAsDefaultAdmin();
+    const [current, next] = args(loginPassword);
+    expect(changeOwnPassword(loginUsername, current, next).ok).toBe(false);
+    expect(readAuthSession().mustChangePassword).toBe(true);
+  });
+
+  it("never lets an admin set any user back to the default password", () => {
+    addUser({ username: "driver", password: "test-pass-1" });
+    expect(updateUserPassword("driver", loginPassword).ok).toBe(false);
+    expect(addUser({ username: "other", password: loginPassword }).ok).toBe(false);
   });
 });

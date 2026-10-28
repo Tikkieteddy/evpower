@@ -1,6 +1,7 @@
 // tikkieteddielab: EV power dashboard application shell.
 import { useEffect, useMemo, useState } from "react";
 import { BatteryCharging, CalendarDays, ChartNoAxesCombined, LogOut, Map, PlugZap, Route, TrendingUp, Users } from "lucide-react";
+import ChangePasswordScreen from "./components/ChangePasswordScreen.jsx";
 import ChargingAnalysis from "./components/ChargingAnalysis.jsx";
 import DailyLog from "./components/DailyLog.jsx";
 import Forecast from "./components/Forecast.jsx";
@@ -80,6 +81,10 @@ export default function App() {
     clearAuthSession();
     setAuthSession(null);
   };
+
+  if (authSession.mustChangePassword) {
+    return <ChangePasswordScreen session={authSession} onChanged={setAuthSession} onLogout={logout} />;
+  }
 
   const renderTab = () => {
     if (activeTab === "daily") {

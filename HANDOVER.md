@@ -31,8 +31,8 @@ There is no EV backend, API, relational database, cloud user store, file upload,
 
 ## Handover Risks
 
-- Critical: the hard-coded default admin credential is in `src/utils/auth.js`, printed in `README.md`, and shipped in the deployed bundle of a **public** repository.
-- Critical: passwords and users are plaintext Local Storage data; authorization is client-controlled.
+- Medium (reassessed 2026-10-28; was rated Critical): the seeded admin password is public (source, Git history, bundle), but data is per-browser, so it only exposes data on a device someone else can use. Mitigated by a forced password change on first login and removal from README (branch `fix/force-default-password-change`).
+- High: passwords and users are plaintext Local Storage data; authorization is client-controlled.
 - High: data is device/browser-specific and can be lost when site data is cleared (no export yet). Corrupted trip data is now copied before fallback (fixed 2026-10-28).
 - High: charged energy and trip consumption are conflated in analytics.
 - High: unrelated Next.js application files are tracked in the same repository (with real Google resource IDs and a fallback secret).
@@ -40,7 +40,6 @@ There is no EV backend, API, relational database, cloud user store, file upload,
 - Medium: one large production JS chunk.
 - Medium: license guard is client code and can be bypassed by rebuilding source.
 - Low: week-key start/end dates are one day early in UTC+7 (labels correct).
-- Low: README says session is Local Storage although code uses Session Storage.
 
 ## Documentation
 

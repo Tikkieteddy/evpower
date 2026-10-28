@@ -3,7 +3,10 @@ flowchart TD
   LOCK -->|fail| L[License Lock]
   LOCK -->|pass| SESSION{Session exists}
   SESSION -->|no| LOGIN[Login]
-  SESSION -->|yes| APP[App shell]
+  SESSION -->|yes| PW{Default password?}
+  PW -->|yes| CHPW[Set New Password]
+  CHPW --> APP
+  PW -->|no| APP[App shell]
   APP --> D[Daily Log]
   APP --> W[Weekly Dashboard]
   APP --> M[Monthly Dashboard]

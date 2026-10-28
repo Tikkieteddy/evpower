@@ -31,14 +31,13 @@ Credit: tikkieteddielab
 
 ## Login
 
-แอปมี client-side login gate สำหรับครอบการใช้งาน dashboard:
+แอปมี client-side login gate สำหรับครอบการใช้งาน dashboard
 
-```text
-Username: admin
-Password: TikkieTeddie@2026
-```
+- บัญชีเริ่มต้นคือ user `admin` รหัสผ่านเริ่มต้นกำหนดไว้ใน `src/utils/auth.js` (ไม่แสดงในเอกสารนี้)
+- รหัสผ่านเริ่มต้นใช้ได้เพื่อ **ตั้งรหัสผ่านใหม่ครั้งแรกเท่านั้น** — หลัง login ระบบจะบังคับให้ตั้งรหัสใหม่อย่างน้อย 8 ตัวอักษรก่อนเข้าใช้งาน
+- รหัสผ่านถูกเก็บแยกในแต่ละ browser ต้องตั้งใหม่ในทุก browser/เครื่องที่ใช้งาน
 
-Session ถูกเก็บใน Local Storage และสามารถออกจากระบบได้ด้วยปุ่ม `Logout`
+Session ถูกเก็บใน Session Storage (หมดอายุเมื่อปิด browser) และสามารถออกจากระบบได้ด้วยปุ่ม `Logout`
 
 หลังเข้าใช้งาน สามารถไปที่ tab `Users` เพื่อ:
 

@@ -54,6 +54,19 @@ Desktop: centered max-width card with icon, title, username, password, error are
 
 Red alert panel (`role="alert"`); buttons wrap under the text on mobile (verified at 375 px, no horizontal overflow). Hidden when there is nothing to report.
 
+## 1a. Set New Password (CURRENT, added 2026-10-28) - `/` after login with the seeded admin password
+
+```text
+[icon] ตั้งรหัสผ่านใหม่ / Signed in as <user>
+[info: default password is public; min 8 chars; this browser only; data kept]
+Current password | New password | Confirm new password
+[error area]
+[Save new password]
+[Logout]
+```
+
+Same card layout as Login (desktop and mobile). Dashboard and tabs are not rendered until the change succeeds. Errors: mismatch, wrong current password, too short, equals the default.
+
 ## 2. Daily Log - `/` tab `daily`
 
 ```text

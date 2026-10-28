@@ -82,7 +82,7 @@
 
 ### ความเสี่ยงหลัก
 
-1. **Critical — รหัสผ่าน admin เริ่มต้นเปิดเผยสาธารณะ:** อยู่ใน `src/utils/auth.js`, `README.md` และ JS bundle ที่ deploy แล้ว และ repository เป็น public ใครก็ login ได้ในทุก browser ที่ยังใช้ค่าเริ่มต้น (รายงานนี้ไม่ได้คัดลอกค่าดังกล่าว)
+1. **Critical → ปรับเป็น Medium (ประเมินใหม่ 2026-10-28: ข้อมูลอยู่แยกแต่ละ browser รหัสนี้จึงเปิดได้แค่ข้อมูลบนเครื่องที่คนอื่นเข้าถึงได้; แก้แล้วด้วยการบังคับเปลี่ยนรหัส) — รหัสผ่าน admin เริ่มต้นเปิดเผยสาธารณะ:** อยู่ใน `src/utils/auth.js`, `README.md` และ JS bundle ที่ deploy แล้ว และ repository เป็น public ใครก็ login ได้ในทุก browser ที่ยังใช้ค่าเริ่มต้น (รายงานนี้ไม่ได้คัดลอกค่าดังกล่าว)
 2. **Critical — Auth ฝั่ง client ล้วน:** user/password/role อยู่ใน browser แก้ไขได้เอง
 3. **High — ข้อมูลสูญหาย:** ไม่มี export/backup/sync; ล้าง site data = ข้อมูลหายทั้งหมด; JSON เสียถูกเขียนทับ
 4. **High — โค้ด Next.js ที่ไม่เกี่ยว:** มี Google Sheet ID / Drive Folder ID จริงใน `.env.example` และ `src/lib/config.ts`, และ fallback secret แบบ hard-code ใน `src/lib/approval.ts` (มีผลถ้าระบบนั้นถูก deploy ที่ใด)

@@ -47,7 +47,7 @@ npm run docs:build     # regenerate docs/handover/HANDOVER_DASHBOARD.html
 npm run docs:validate  # links, referenced files, storage keys, secrets, dashboard freshness
 ```
 
-Verified 2026-10-28 (Claude): test PASS (54 + 1 expected fail), lint PASS, build PASS (652 kB chunk warning), docs:validate PASS, mobile 375 px runtime PASS.
+Verified 2026-10-28 (Claude): test PASS (63 + 1 expected fail), lint PASS, build PASS (652 kB chunk warning), docs:validate PASS, mobile 375 px runtime PASS.
 
 ## Documentation System
 
@@ -92,7 +92,7 @@ Vercel project name is `evpower`; public URL reported by the owner is `https://e
 
 ## Current Priorities
 
-1. Owner decision: rotate/remove the public default credential (README, `auth.js`, deployed bundle).
+1. Default credential: forced change on first login + README cleanup done on `fix/force-default-password-change` (PR pending owner merge).
 2. Owner decision: offline personal tool vs. secure multi-user product.
 3. Owner decision: fate of unrelated Next.js files.
 4. Export/Backup plan ([EXPORT_BACKUP_PLAN.md](docs/handover/plans/EXPORT_BACKUP_PLAN.md)): stage 1 done; stages 2-3 await answers to section 6.

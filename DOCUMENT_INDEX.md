@@ -1,6 +1,6 @@
 # Document Index
 
-Last updated: 2026-10-28 (Asia/Bangkok) by Claude Code · Docs version `V.1.4` · App version `1.0.0`
+Last updated: 2026-10-28 (Asia/Bangkok) by Claude Code · Docs version `V.1.5` · App version `1.0.0`
 
 Status legend: **Verified** = checked against source by Claude · **Updated** = corrected/extended by Claude · **New** = created by Claude · **Generated** = produced by a script, do not hand-edit · **Snapshot** = dated formal record.
 
