@@ -1,0 +1,13 @@
+flowchart LR
+  U[Driver / Admin] --> B[Browser]
+  B --> SPA[React + Vite SPA]
+  SPA --> AUTH[Client login gate]
+  SPA --> CALC[Calculation helpers]
+  SPA --> CHARTS[Recharts]
+  AUTH <--> SS[(Session Storage)]
+  SPA <--> LS[(Local Storage)]
+  V[Vercel CDN] --> SPA
+  G[GitHub repository] --> V
+  X[No EV backend / API / database]:::absent
+  classDef absent fill:#f4f2ec,stroke:#b7b4aa,color:#667276,stroke-dasharray:5 4;
+

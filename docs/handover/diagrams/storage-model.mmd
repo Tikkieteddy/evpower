@@ -1,0 +1,35 @@
+erDiagram
+  TRIP {
+    string id PK
+    string date
+    string routeName
+    number distanceKm
+    boolean hasCharge
+    string chargerName
+    number chargeCost
+    number kwh
+    number idleMinutes
+    number idleKwhPerHour
+    string idleRateMode
+    string note
+  }
+  ROUTE_PRESET {
+    string id PK
+    string routeName
+    number distanceKm
+  }
+  USER {
+    string username PK
+    string password
+    string role
+    string createdAt
+  }
+  SESSION {
+    string user
+    string role
+    string credit
+    string signedInAt
+  }
+  USER ||--o| SESSION : matched_by_username
+  ROUTE_PRESET }o..o{ TRIP : copied_values_only
+

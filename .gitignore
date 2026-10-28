@@ -17,3 +17,6 @@ yarn-error.log*
 .DS_Store
 
 .vercel
+
+# Codex handover package (contents already in docs/; publish as a release asset if needed)
+PROJECT_HANDOVER_TO_CLAUDE_CODE.zip
