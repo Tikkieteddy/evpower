@@ -1,0 +1,12 @@
+flowchart TD
+  F[Daily form] --> V[Browser validation]
+  V --> T[Trip object]
+  T --> RS[React trips state]
+  RS --> L[(ev-charge-daily-log-v1)]
+  RS --> N[normalizeTrip / sortTrips]
+  N --> S[summarize / route / charger / forecast]
+  S --> C[Cards, tables, charts]
+  P[Route preset form] --> RP[(route-presets-v1)]
+  A[Login / user admin] --> US[(users-v1)]
+  A --> SE[(session-v1 in Session Storage)]
+

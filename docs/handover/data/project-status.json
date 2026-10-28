@@ -1,0 +1,131 @@
+{
+  "$comment": "Single source of truth for HANDOVER_DASHBOARD.html. Edit this file, then run `npm run docs:build` and `npm run docs:validate`. Never put credentials or user data here.",
+  "meta": {
+    "project": "EV Charge Daily Calculator",
+    "packageVersion": "1.0.0",
+    "appFooterVersion": "V.1.0.0",
+    "docsVersion": "V.1.1",
+    "dashboardFooter": "© 2026 ttdLab | V.1",
+    "repository": "https://github.com/Tikkieteddy/evpower",
+    "repositoryVisibility": "Public (GitHub API returned 200 without authentication on 2026-10-28)",
+    "baselineBranch": "master",
+    "baselineCommit": "5360d94",
+    "workingBranch": "docs/claude-takeover",
+    "productionUrl": "https://evpower-beta.vercel.app",
+    "lastUpdated": "2026-10-28",
+    "maintainer": "Claude Code (takeover from OpenAI Codex)"
+  },
+  "checks": [
+    { "name": "npm run lint", "status": "pass", "detail": "ESLint exit 0 (2026-10-28, Claude)" },
+    { "name": "npm run build", "status": "pass", "detail": "Vite 7 build OK; JS 651.83 kB / gzip 194.17 kB (>500 kB warning)" },
+    { "name": "npm test", "status": "partial", "detail": "Alias of build only; no automated tests exist" },
+    { "name": "Mobile 375px runtime", "status": "pass", "detail": "All 7 tabs: no horizontal page overflow (Claude, in-app browser)" },
+    { "name": "Local vs remote", "status": "pass", "detail": "master == origin/master == 5360d94; handover docs untracked" }
+  ],
+  "architecture": {
+    "runtime": ["Driver / Admin", "Browser", "React 19 + Vite SPA", "Local / Session Storage"],
+    "delivery": ["GitHub (public)", "Vercel build (npm run build)", "Static dist / CDN"],
+    "notes": [
+      "Entry: index.html → src/main.jsx → src/App.jsx",
+      "Tailwind CSS 4 is compiled through postcss.config.mjs (@tailwindcss/postcss) — this file IS part of the EV build",
+      "No fetch/XHR/WebSocket in the EV import graph; all calculations run in the browser",
+      "public/TNN_A.jpg is unreferenced by EV but is still copied into dist/ and deployed"
+    ]
+  },
+  "screens": [
+    { "id": "lock", "label": "License Lock", "state": "CURRENT", "file": "src/components/LicenseLock.jsx", "note": "Shown when licenseGuard integrity check fails" },
+    { "id": "login", "label": "Login", "state": "CURRENT", "file": "src/components/LoginScreen.jsx", "note": "Client-side gate; session in Session Storage" },
+    { "id": "daily", "label": "Daily Log", "state": "CURRENT", "file": "src/components/DailyLog.jsx", "note": "Cards + charts + route presets + CRUD form + history" },
+    { "id": "weekly", "label": "Weekly Dashboard", "state": "CURRENT", "file": "src/components/WeeklyDashboard.jsx", "note": "Week selector, metrics, charts" },
+    { "id": "monthly", "label": "Monthly Dashboard", "state": "CURRENT", "file": "src/components/MonthlyDashboard.jsx", "note": "Month picker, metrics, highlights" },
+    { "id": "routes", "label": "Route Analysis", "state": "CURRENT", "file": "src/components/RouteAnalysis.jsx", "note": "Per-route table" },
+    { "id": "charging", "label": "Charging Analysis", "state": "CURRENT", "file": "src/components/ChargingAnalysis.jsx", "note": "Per-charger table" },
+    { "id": "forecast", "label": "Forecast", "state": "CURRENT", "file": "src/components/Forecast.jsx", "note": "Next-month projection" },
+    { "id": "users", "label": "Users (admin)", "state": "CURRENT", "file": "src/components/UserManagement.jsx", "note": "Browser-local user CRUD" }
+  ],
+  "features": [
+    { "name": "Login gate", "module": "Authentication", "file": "src/utils/auth.js", "status": "Partial", "issue": "Plaintext client credentials; default credential is public in repo", "priority": "P0" },
+    { "name": "Local user management", "module": "Authentication", "file": "src/components/UserManagement.jsx", "status": "Partial", "issue": "Device-only; client role checks", "priority": "P0" },
+    { "name": "License/brand integrity", "module": "Integrity", "file": "src/utils/licenseGuard.js", "status": "Partial", "issue": "Bypassable at build level", "priority": "P2" },
+    { "name": "Daily trip create", "module": "Daily Log", "file": "src/components/DailyLog.jsx", "status": "Implemented", "issue": "Browser validation only", "priority": "P1" },
+    { "name": "Daily trip edit", "module": "Daily Log", "file": "src/components/DailyLog.jsx", "status": "Implemented", "issue": "No audit trail", "priority": "P2" },
+    { "name": "Daily trip delete", "module": "Daily Log", "file": "src/App.jsx", "status": "Implemented", "issue": "No undo", "priority": "P2" },
+    { "name": "Route presets / autofill", "module": "Daily Log", "file": "src/components/RoutePresetManager.jsx", "status": "Implemented", "issue": "No preset edit; delete without confirm", "priority": "P2" },
+    { "name": "Charge session fields", "module": "Daily Log", "file": "src/components/DailyLog.jsx", "status": "Implemented", "issue": "Custom charger names not normalized", "priority": "P2" },
+    { "name": "Idle energy estimate", "module": "Analytics", "file": "src/utils/calculations.js", "status": "Implemented", "issue": "Estimate, not telemetry", "priority": "P1" },
+    { "name": "Seven-day starter data", "module": "Bootstrap", "file": "src/data/sampleData.js", "status": "Implemented", "issue": "Also used as fallback on corrupted storage (overwrites)", "priority": "P1" },
+    { "name": "Local trip persistence", "module": "Storage", "file": "src/App.jsx", "status": "Implemented", "issue": "No migration/backup/sync", "priority": "P0" },
+    { "name": "Weekly dashboard", "module": "Reporting", "file": "src/components/WeeklyDashboard.jsx", "status": "Implemented", "issue": "Week key start/end shifted −1 day in UTC+ (label OK)", "priority": "P2" },
+    { "name": "Monthly dashboard", "module": "Reporting", "file": "src/components/MonthlyDashboard.jsx", "status": "Implemented", "issue": "Energy semantics misleading", "priority": "P1" },
+    { "name": "Daily charts", "module": "Visualization", "file": "src/components/Charts.jsx", "status": "Implemented", "issue": "Large bundle", "priority": "P2" },
+    { "name": "Route analysis", "module": "Analytics", "file": "src/components/RouteAnalysis.jsx", "status": "Implemented", "issue": "Charged-day attribution", "priority": "P1" },
+    { "name": "Charger analysis", "module": "Analytics", "file": "src/components/ChargingAnalysis.jsx", "status": "Implemented", "issue": "Distance association may mislead", "priority": "P1" },
+    { "name": "Forecast", "module": "Planning", "file": "src/components/Forecast.jsx", "status": "Implemented", "issue": "No confidence interval", "priority": "P1" },
+    { "name": "Responsive shell / navigation", "module": "UX", "file": "src/App.jsx", "status": "Implemented", "issue": "Verified at 375px; a11y not audited", "priority": "P2" },
+    { "name": "Sample reset", "module": "Data management", "file": "src/App.jsx", "status": "Implemented", "issue": "Destructive replace; no backup", "priority": "P1" },
+    { "name": "Export / import / backup", "module": "Data management", "file": "", "status": "Planned", "issue": "Not implemented — roadmap P1", "priority": "P1" },
+    { "name": "Automated tests", "module": "Quality", "file": "", "status": "Planned", "issue": "Not implemented — roadmap P1", "priority": "P1" }
+  ],
+  "storage": [
+    { "key": "ev-charge-daily-log-v1", "store": "localStorage", "shape": "Trip[]", "file": "src/App.jsx", "risk": "Invalid JSON → sample data is loaded AND immediately written back, overwriting the corrupted original" },
+    { "key": "tikkieteddielab-evpower-route-presets-v1", "store": "localStorage", "shape": "RoutePreset[]", "file": "src/utils/routePresets.js", "risk": "Seeded with 4 defaults on first read" },
+    { "key": "tikkieteddielab-evpower-users-v1", "store": "localStorage", "shape": "User[] (plaintext password)", "file": "src/utils/auth.js", "risk": "Readable by anyone with browser access" },
+    { "key": "tikkieteddielab-evpower-session-v1", "store": "sessionStorage", "shape": "Session", "file": "src/utils/auth.js", "risk": "Ends when tab/browser session closes" }
+  ],
+  "integrations": [
+    { "name": "EV HTTP APIs", "status": "None", "detail": "0 endpoints in the Vite import graph" },
+    { "name": "GitHub", "status": "Verified", "detail": "origin = Tikkieteddy/evpower (public)" },
+    { "name": "Vercel", "status": "Partially verified", "detail": "Local .vercel link: projectName evpower; vercel.json → dist. Dashboard/env/logs not accessible" },
+    { "name": "Legacy Next.js (src/app, src/lib)", "status": "Not part of EV", "detail": "Google Sheets/Drive, GitHub storage, SMTP — excluded from EV lint/build" }
+  ],
+  "issues": [
+    { "severity": "Critical", "title": "Default admin credential is public", "detail": "Hard-coded in src/utils/auth.js, printed in README.md, shipped in the deployed JS bundle, and the repository is public. Anyone can log in to any browser that still uses the default." },
+    { "severity": "Critical", "title": "Plaintext client-side authentication", "detail": "Users/passwords/roles live in Local Storage; not a security boundary." },
+    { "severity": "High", "title": "Local data loss", "detail": "No export/backup/sync; clearing site data deletes everything; corrupted trip JSON is overwritten by sample data." },
+    { "severity": "High", "title": "Energy semantics", "detail": "Charged kWh is presented as consumed kWh and attributed to the route recorded on the charging day." },
+    { "severity": "High", "title": "Mixed repository", "detail": "Unrelated Next.js profile workflow tracked beside EV; it contains real Google Sheet/Drive IDs in .env.example/config.ts and a hard-coded fallback approval secret in src/lib/approval.ts." },
+    { "severity": "Medium", "title": "No automated tests", "detail": "npm test only runs the build." },
+    { "severity": "Medium", "title": "Large bundle", "detail": "Single 652 kB JS chunk (Recharts)." },
+    { "severity": "Low", "title": "Week key timezone shift", "detail": "getWeekKey uses toISOString() on local midnight, so start/end are one day early in UTC+7. Grouping is consistent and the label is correct, so no visible bug today." },
+    { "severity": "Low", "title": "README outdated", "detail": "Says session is in Local Storage (code uses Session Storage); project structure list incomplete." }
+  ],
+  "roadmap": [
+    { "priority": "P0", "title": "Rotate/remove public default credential", "status": "Needs owner decision" },
+    { "priority": "P0", "title": "Decide security model (offline personal vs. cloud multi-user)", "status": "Needs owner decision" },
+    { "priority": "P0", "title": "Resolve repository contamination (Next.js files)", "status": "Needs owner decision" },
+    { "priority": "P1", "title": "Automated test baseline (Vitest)", "status": "Ready to start" },
+    { "priority": "P1", "title": "Export / import / backup + non-destructive storage fallback", "status": "Ready to start" },
+    { "priority": "P1", "title": "Correct energy accounting model", "status": "Needs product decision" },
+    { "priority": "P2", "title": "Code-split charts, a11y, URL-addressable tabs", "status": "Backlog" }
+  ],
+  "updates": [
+    { "date": "2026-10-28", "who": "Claude Code", "text": "Takeover audit: verified Codex docs against source; corrected postcss/public asset boundary; added public-credential, storage-overwrite and timezone findings; added docs build/validate scripts; dashboard now generated from this JSON; mobile 375px verified." },
+    { "date": "2026-10-28", "who": "OpenAI Codex", "text": "Initial handover package (docs/handover, PDF, dashboard, ZIP)." },
+    { "date": "git 5360d94", "who": "Owner", "text": "Require session login gate (last application commit)." }
+  ],
+  "documents": [
+    { "file": "CLAUDE.md", "path": "CLAUDE.md", "purpose": "AI developer entry point and permanent rules", "category": "AI handover", "status": "Updated 2026-10-28" },
+    { "file": "START_HERE_CLAUDE.md", "path": "START_HERE_CLAUDE.md", "purpose": "Takeover instruction (Thai)", "category": "AI handover", "status": "Verified" },
+    { "file": "HANDOVER.md", "path": "HANDOVER.md", "purpose": "Current verified state and risks", "category": "Summary", "status": "Updated 2026-10-28" },
+    { "file": "DOCUMENT_INDEX.md", "path": "DOCUMENT_INDEX.md", "purpose": "Canonical document map", "category": "Index", "status": "Updated 2026-10-28" },
+    { "file": "INITIAL_TAKEOVER_REPORT.md", "path": "docs/handover/INITIAL_TAKEOVER_REPORT.md", "purpose": "Claude takeover audit report", "category": "Report", "status": "New 2026-10-28" },
+    { "file": "HANDOVER_DASHBOARD.html", "path": "docs/handover/HANDOVER_DASHBOARD.html", "purpose": "Owner control center (generated)", "category": "Interactive", "status": "Generated" },
+    { "file": "project-status.json", "path": "docs/handover/data/project-status.json", "purpose": "Single data source for the dashboard", "category": "Data", "status": "New 2026-10-28" },
+    { "file": "HANDOVER_SUMMARY.pdf", "path": "docs/handover/HANDOVER_SUMMARY.pdf", "purpose": "Formal snapshot V.1 by Codex (baseline 5360d94)", "category": "Report", "status": "Snapshot — some statements superseded" },
+    { "file": "PROJECT_OVERVIEW.md", "path": "docs/handover/PROJECT_OVERVIEW.md", "purpose": "Product, users, stack", "category": "Analysis", "status": "Verified" },
+    { "file": "SYSTEM_ARCHITECTURE.md", "path": "docs/handover/SYSTEM_ARCHITECTURE.md", "purpose": "Components, data flow, sitemap", "category": "Architecture", "status": "Updated 2026-10-28" },
+    { "file": "PROJECT_STRUCTURE.md", "path": "docs/handover/PROJECT_STRUCTURE.md", "purpose": "Active vs. inactive files", "category": "Architecture", "status": "Updated 2026-10-28" },
+    { "file": "FEATURE_INVENTORY.md", "path": "docs/handover/FEATURE_INVENTORY.md", "purpose": "Feature matrix", "category": "Delivery", "status": "Verified" },
+    { "file": "SETUP_GUIDE.md", "path": "docs/handover/SETUP_GUIDE.md", "purpose": "Install, run, build, deploy", "category": "Developer", "status": "Updated 2026-10-28" },
+    { "file": "API_DOCUMENTATION.md", "path": "docs/handover/API_DOCUMENTATION.md", "purpose": "API inventory (none for EV)", "category": "Technical", "status": "Verified" },
+    { "file": "DATABASE_DOCUMENTATION.md", "path": "docs/handover/DATABASE_DOCUMENTATION.md", "purpose": "Browser storage schemas", "category": "Technical", "status": "Updated 2026-10-28" },
+    { "file": "DEVELOPMENT_ROADMAP.md", "path": "docs/handover/DEVELOPMENT_ROADMAP.md", "purpose": "Prioritized future work", "category": "Planning", "status": "Updated 2026-10-28" },
+    { "file": "NEXT_STEPS.md", "path": "docs/handover/NEXT_STEPS.md", "purpose": "Next session checklist", "category": "Planning", "status": "Updated 2026-10-28" },
+    { "file": "DECISIONS.md", "path": "docs/handover/DECISIONS.md", "purpose": "Architecture decisions", "category": "Architecture", "status": "Updated 2026-10-28" },
+    { "file": "CHANGELOG.md", "path": "docs/handover/CHANGELOG.md", "purpose": "Git-evidenced history", "category": "History", "status": "Updated 2026-10-28" },
+    { "file": "HANDOVER_VALIDATION.md", "path": "docs/handover/HANDOVER_VALIDATION.md", "purpose": "Validation log", "category": "QA", "status": "Updated 2026-10-28" },
+    { "file": "WIREFRAMES.md", "path": "docs/handover/wireframes/WIREFRAMES.md", "purpose": "Desktop/mobile wireframes", "category": "UX", "status": "Verified" },
+    { "file": "diagrams/*.mmd", "path": "docs/handover/diagrams/system-architecture.mmd", "purpose": "Editable Mermaid sources", "category": "Architecture", "status": "Verified" },
+    { "file": "PACKAGE_README.md", "path": "docs/handover/PACKAGE_README.md", "purpose": "How to use the Codex ZIP", "category": "Packaging", "status": "Historical" }
+  ]
+}
