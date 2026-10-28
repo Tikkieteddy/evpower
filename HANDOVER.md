@@ -6,8 +6,9 @@
 - Package version: `1.0.0`
 - UI footer version: `V.1.0.0`
 - Repository: `https://github.com/Tikkieteddy/evpower` (**public**)
-- Branch audited: `master` (== `origin/master`); docs work on `docs/claude-takeover`
-- Last application commit: `5360d94` (`Require session login gate`)
+- Branch: `master` (== `origin/master` @ `520c3d8`, deployed to production 2026-10-28)
+- Codex audit baseline: `5360d94` (`Require session login gate`)
+- Claude changes: PR #1 (docs) and PR #2 (tests + data protection), both merged
 - Handover: OpenAI Codex -> Claude Code, 2026-10-28 (Asia/Bangkok)
 - Production URL supplied by owner: `https://evpower-beta.vercel.app`
 
@@ -47,4 +48,4 @@ Use [DOCUMENT_INDEX.md](DOCUMENT_INDEX.md) as the canonical map. The interactive
 
 ## Change Control
 
-The handover (Codex + Claude) added documentation, docs tooling (`scripts/docs/`, `docs:*` npm scripts) and a `.gitignore` entry only. It does not modify EV application behavior, commit, push, deploy, or alter production data.
+PR #1 added documentation, docs tooling and a `.gitignore` entry (no app change). PR #2 added unit tests and the stage-1 data protection (`tripStorage.js`, `StorageNotice.jsx`, `App.jsx`) without changing existing storage keys or schemas. Both were merged and pushed with explicit owner approval; Vercel deployed `520c3d8`. Future commits, pushes, merges and deploys still need explicit owner approval.

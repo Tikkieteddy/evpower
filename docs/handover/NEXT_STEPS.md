@@ -1,21 +1,19 @@
 # Next Steps for Claude Code
 
-_Updated 2026-10-28 after the Claude takeover audit. Codex checklist items 1, 2 and 7 are done (see `HANDOVER_VALIDATION.md`)._
+_Updated 2026-10-28 after PR #1 and PR #2 were merged to `master` (`520c3d8`) and deployed. Codex checklist items 1, 2 and 7 are done (see `HANDOVER_VALIDATION.md`)._
 
 ## Waiting on the Owner
 
-1. Approve commit/push of branch `docs/claude-takeover` (handover docs + docs scripts + CLAUDE.md).
-2. Decide on the public default credential (remove from README / force change / redesign auth).
-3. Choose offline-personal vs. secure multi-user architecture.
-4. Decide the fate of the unrelated Next.js files (`src/app/**`, `src/lib/**`, Next config, `.env.example`, `public/TNN_A.jpg`).
-
-5. Export/Backup stages 2-3: answer the questions in section 6 of [`plans/EXPORT_BACKUP_PLAN.md`](plans/EXPORT_BACKUP_PLAN.md) (stage 1 done).
-6. Approve commit/push of branch `test/vitest-baseline` (tests + stage 1, not committed yet).
+1. Decide on the public default credential (remove from README / force change / redesign auth).
+2. Choose offline-personal vs. secure multi-user architecture.
+3. Decide the fate of the unrelated Next.js files (`src/app/**`, `src/lib/**`, Next config, `.env.example`, `public/TNN_A.jpg`).
+4. Export/Backup stages 2-3: answer the questions in section 6 of [`plans/EXPORT_BACKUP_PLAN.md`](plans/EXPORT_BACKUP_PLAN.md) (stage 1 done).
 
 ## Done 2026-10-28
 
-- Vitest unit tests (42) and `npm test` now runs them - branch `test/vitest-baseline`.
-- Export/Backup plan written; stage 1 (unreadable-data protection, safe sample reset, save-failure warning) implemented and tested.
+- Handover docs + docs tooling merged (PR #1).
+- Vitest unit tests (55) and `npm test` now runs them (PR #2).
+- Export/Backup plan written; stage 1 (unreadable-data protection, safe sample reset, save-failure warning) implemented and tested (PR #2), deployed to production 2026-10-28.
 
 ## Ready to Start (no owner decision needed)
 

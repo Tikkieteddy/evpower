@@ -135,3 +135,15 @@ Branch `docs/claude-takeover` from `master` @ `5360d94` (== `origin/master`, con
 | Browser: mobile 375 px | PASS | banner wraps, no horizontal overflow |
 | Copy-failure blocking path | UNIT ONLY | `loadTrips` reports `backupSaved:false`; App blocking verified by code review, not in browser |
 | Test data | CLEANED | only the in-app browser test origin (127.0.0.1:5180) was used; test keys removed |
+
+## Merge and Deploy (2026-10-28)
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| PR #1 merged | PASS | merge commit `d8db83c`; checks 2/2 SUCCESS, mergeable CLEAN beforehand |
+| PR #2 merged | PASS | merge commit `520c3d8`; checks 2/2 SUCCESS, mergeable CLEAN beforehand |
+| Vercel deployment of `520c3d8` | PASS | GitHub commit status `Vercel: success`; live in ~20 s |
+| Production serves new code | PASS | live bundle `index-D_oMCmwm.js` contains the stage-1 backup-key code |
+| Production smoke test | PASS | login screen renders, footer `V.1.0.0`, no console errors, no storage banner |
+| Production logged-in tabs | NOT VERIFIED | did not log in to production (real environment); all tabs verified locally |
+| Local `master` | PASS | fast-forwarded to `520c3d8`; `npm test` 54 passed + 1 expected fail |

@@ -4,13 +4,13 @@
     "project": "EV Charge Daily Calculator",
     "packageVersion": "1.0.0",
     "appFooterVersion": "V.1.0.0",
-    "docsVersion": "V.1.3",
+    "docsVersion": "V.1.4",
     "dashboardFooter": "© 2026 ttdLab | V.1",
     "repository": "https://github.com/Tikkieteddy/evpower",
     "repositoryVisibility": "Public (GitHub API returned 200 without authentication on 2026-10-28)",
     "baselineBranch": "master",
     "baselineCommit": "5360d94",
-    "workingBranch": "test/vitest-baseline",
+    "workingBranch": "master @ 520c3d8 (deployed)",
     "productionUrl": "https://evpower-beta.vercel.app",
     "lastUpdated": "2026-10-28",
     "maintainer": "Claude Code (takeover from OpenAI Codex)"
@@ -37,9 +37,9 @@
       "detail": "All 7 tabs: no horizontal page overflow (Claude, in-app browser)"
     },
     {
-      "name": "Local vs remote",
+      "name": "Git / deploy",
       "status": "pass",
-      "detail": "master == origin/master == 5360d94; handover docs untracked"
+      "detail": "master == origin/master == 520c3d8; PR #1 + #2 merged; Vercel deploy success, production smoke test OK"
     }
   ],
   "architecture": {
@@ -461,6 +461,11 @@
   "updates": [
     {
       "date": "2026-10-28",
+      "who": "Owner + Claude Code",
+      "text": "PR #1 (docs) and PR #2 (tests + data protection) merged to master (520c3d8) with owner approval; Vercel deployed; production smoke test passed."
+    },
+    {
+      "date": "2026-10-28",
       "who": "Claude Code",
       "text": "Export/Backup stage 1: unreadable trip data is copied before fallback, sample reset keeps a copy, save failures show a warning; 13 new tests; verified in browser (desktop + 375 px)."
     },
@@ -526,7 +531,7 @@
       "path": "docs/handover/plans/EXPORT_BACKUP_PLAN.md",
       "purpose": "Export/Import/Backup proposal (Thai)",
       "category": "Plan",
-      "status": "Stage 1 done; 2-3 awaiting approval"
+      "status": "Stage 1 live; 2-3 awaiting approval"
     },
     {
       "file": "HANDOVER_DASHBOARD.html",
