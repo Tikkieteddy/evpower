@@ -4,9 +4,9 @@ _Updated 2026-10-28 after PR #1 and PR #2 were merged to `master` (`520c3d8`) an
 
 ## Waiting on the Owner
 
-1. Choose offline-personal vs. secure multi-user architecture.
-2. Decide the fate of the unrelated Next.js files (`src/app/**`, `src/lib/**`, Next config, `.env.example`, `public/TNN_A.jpg`).
-3. Export/Backup stages 2-3: answer the questions in section 6 of [`plans/EXPORT_BACKUP_PLAN.md`](plans/EXPORT_BACKUP_PLAN.md) (stage 1 done).
+1. (Deferred) Choose offline-personal vs. secure multi-user architecture.
+2. (Deferred) Decide the fate of the unrelated Next.js files (`src/app/**`, `src/lib/**`, Next config, `.env.example`, `public/TNN_A.jpg`).
+3. Review/merge the PR for `feat/export-import` (Export JSON/CSV + Import JSON). Security model and Next.js files are deferred by the owner (2026-10-28): keep the system as is.
 
 ## Done 2026-10-28
 

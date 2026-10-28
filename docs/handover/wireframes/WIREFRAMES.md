@@ -72,6 +72,9 @@ Same card layout as Login (desktop and mobile). Dashboard and tabs are not rende
 ```text
 [6 summary cards]
 [3 charts: cost bar | distance line | route-cost pie]
+[Backup: สำรอง / กู้คืนข้อมูล] [Export JSON] [Export CSV] [Import JSON]   (added 2026-10-28)
+  after choosing a file: [preview: new | conflicts or to-be-removed | unchanged/kept | invalid]
+  [first 5 invalid rows] (o) merge (default) ( ) replace  [conflict: keep / use file] [Confirm] [Cancel]
 [Route presets: name + km + Add; removable chips]
 [Daily form]
   Date | preset + editable route | km | has charge

@@ -1,18 +1,10 @@
 // tikkieteddielab: warnings for unreadable or unsaved browser data.
 import { AlertTriangle, Download, X } from "lucide-react";
+import { downloadFile } from "../utils/download.js";
 
 const reasonText = {
   "invalid-json": "ข้อมูลไม่อยู่ในรูปแบบ JSON ที่อ่านได้",
   "not-an-array": "ข้อมูลไม่ใช่รายการบันทึกการเดินทาง",
-};
-
-const downloadText = (filename, text) => {
-  const url = window.URL.createObjectURL(new window.Blob([text], { type: "application/json" }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  window.URL.revokeObjectURL(url);
 };
 
 const buttonClass =
@@ -45,7 +37,7 @@ export default function StorageNotice({ recovery, persistBlocked, saveFailed, on
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              onClick={() => downloadText(`evpower-unreadable-data-${new Date().toISOString().slice(0, 10)}.json`, recovery.raw)}
+              onClick={() => downloadFile(`evpower-unreadable-data-${new Date().toISOString().slice(0, 10)}.json`, recovery.raw)}
               className={`${buttonClass} border-red-300 bg-white hover:bg-red-100`}
             >
               <Download size={16} /> ดาวน์โหลดข้อมูลเดิม

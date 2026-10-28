@@ -1,6 +1,7 @@
 // tikkieteddielab: daily trip and charging form.
 import { useMemo, useState } from "react";
 import { Edit3, Plus, RotateCcw, Trash2 } from "lucide-react";
+import BackupPanel from "./BackupPanel.jsx";
 import DataTable from "./DataTable.jsx";
 import RoutePresetManager from "./RoutePresetManager.jsx";
 import {
@@ -11,7 +12,7 @@ import {
   getAutoIdleKwhPerHour,
   sortTrips,
 } from "../utils/calculations.js";
-import { getRoutePresets } from "../utils/routePresets.js";
+import { getRoutePresets, saveRoutePresets } from "../utils/routePresets.js";
 
 const blankForm = {
   date: new Date().toISOString().slice(0, 10),
@@ -29,7 +30,7 @@ const blankForm = {
   note: "",
 };
 
-export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
+export default function DailyLog({ trips, onSave, onDelete, onResetSample, onImportTrips }) {
   const [form, setForm] = useState(blankForm);
   const [editingId, setEditingId] = useState(null);
   const [routePresets, setRoutePresets] = useState(getRoutePresets);
@@ -94,6 +95,13 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
     setEditingId(null);
   };
 
+  const applyImport = (plan) => {
+    if (!onImportTrips(plan.trips)) return false;
+    saveRoutePresets(plan.routePresets);
+    setRoutePresets(plan.routePresets);
+    return true;
+  };
+
   const editTrip = (trip) => {
     setEditingId(trip.id);
     setForm({
@@ -153,6 +161,7 @@ export default function DailyLog({ trips, onSave, onDelete, onResetSample }) {
 
   return (
     <div className="grid gap-5">
+      <BackupPanel trips={trips} routePresets={routePresets} onImport={applyImport} />
       <RoutePresetManager routes={routePresets} onChange={setRoutePresets} />
 
       <form onSubmit={submit} className="rounded-lg border border-[var(--blonde-line)] bg-white p-4 shadow-sm">

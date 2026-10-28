@@ -30,6 +30,7 @@ Source: [`diagrams/system-architecture.mmd`](diagrams/system-architecture.mmd).
 | Charts | `Charts.jsx` | bar, line, pie visualization |
 | Persistence | `tripStorage.js`, `auth.js`, `routePresets.js` | Local/Session Storage access; trips are never overwritten without a copy |
 | Warnings | `StorageNotice.jsx` | unreadable-data and save-failure banner |
+| Backup | `backup.js`, `BackupPanel.jsx`, `download.js` | JSON/CSV export, validated JSON import (merge/replace) |
 | Integrity | `licenseGuard.js`, `brandAudit.js` | client-side credit/version/palette equality checks |
 
 ## Data Flow

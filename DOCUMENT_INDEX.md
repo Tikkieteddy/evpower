@@ -1,6 +1,6 @@
 # Document Index
 
-Last updated: 2026-10-28 (Asia/Bangkok) by Claude Code · Docs version `V.1.6` · App version `1.0.0`
+Last updated: 2026-10-28 (Asia/Bangkok) by Claude Code · Docs version `V.1.7` · App version `1.0.0`
 
 Status legend: **Verified** = checked against source by Claude · **Updated** = corrected/extended by Claude · **New** = created by Claude · **Generated** = produced by a script, do not hand-edit · **Snapshot** = dated formal record.
 
@@ -11,7 +11,7 @@ Status legend: **Verified** = checked against source by Claude · **Updated** = 
 | Handover | Current verified state and risks | Summary | [`HANDOVER.md`](HANDOVER.md) | 2026-10-28 | Takeover report | Updated |
 | Document Index | This map | Index | [`DOCUMENT_INDEX.md`](DOCUMENT_INDEX.md) | 2026-10-28 | dashboard §12 | Updated |
 | Initial Takeover Report | Claude audit, findings, priorities (Thai) | Report | [`docs/handover/INITIAL_TAKEOVER_REPORT.md`](docs/handover/INITIAL_TAKEOVER_REPORT.md) | 2026-10-28 | Validation, Roadmap | New |
-| Export/Backup Plan | Proposal for export/import/backup and safe storage fallback (Thai) | Plan | [`docs/handover/plans/EXPORT_BACKUP_PLAN.md`](docs/handover/plans/EXPORT_BACKUP_PLAN.md) | 2026-10-28 | Roadmap P1, Data Documentation | Stage 1 live; 2-3 proposed |
+| Export/Backup Plan | Proposal for export/import/backup and safe storage fallback (Thai) | Plan | [`docs/handover/plans/EXPORT_BACKUP_PLAN.md`](docs/handover/plans/EXPORT_BACKUP_PLAN.md) | 2026-10-28 | Roadmap P1, Data Documentation | Stage 1 live; 2-3 built (PR pending) |
 | Interactive Dashboard | Owner control center (12 sections) | Interactive | [`docs/handover/HANDOVER_DASHBOARD.html`](docs/handover/HANDOVER_DASHBOARD.html) | V.1.1 | project-status.json | Generated |
 | Dashboard Data | Single source for dashboard content | Data | [`docs/handover/data/project-status.json`](docs/handover/data/project-status.json) | 2026-10-28 | scripts/docs | New |
 | Docs Scripts | Dashboard generator + validator | Tooling | [`scripts/docs/`](scripts/docs/build-dashboard.mjs) | 2026-10-28 | package.json `docs:*` | New |
