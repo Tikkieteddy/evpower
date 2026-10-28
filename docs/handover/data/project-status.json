@@ -4,13 +4,13 @@
     "project": "EV Charge Daily Calculator",
     "packageVersion": "1.0.0",
     "appFooterVersion": "V.1.0.0",
-    "docsVersion": "V.1.6",
+    "docsVersion": "V.1.7",
     "dashboardFooter": "© 2026 ttdLab | V.1",
     "repository": "https://github.com/Tikkieteddy/evpower",
     "repositoryVisibility": "Public (GitHub API returned 200 without authentication on 2026-10-28)",
     "baselineBranch": "master",
     "baselineCommit": "5360d94",
-    "workingBranch": "master @ 6ce2634 (deployed)",
+    "workingBranch": "feat/export-import (PR pending)",
     "productionUrl": "https://evpower-beta.vercel.app",
     "lastUpdated": "2026-10-28",
     "maintainer": "Claude Code (takeover from OpenAI Codex)"
@@ -29,7 +29,7 @@
     {
       "name": "npm test",
       "status": "pass",
-      "detail": "Vitest 4: 63 passed + 1 expected fail (known week-key bug)"
+      "detail": "Vitest 4: 87 passed + 1 expected fail (known week-key bug)"
     },
     {
       "name": "Mobile 375px runtime",
@@ -284,7 +284,7 @@
       "module": "Data management",
       "file": "src/App.jsx",
       "status": "Implemented",
-      "issue": "Keeps a copy before replacing; no restore UI yet",
+      "issue": "Keeps a copy before replacing",
       "priority": "P2"
     },
     {
@@ -292,7 +292,7 @@
       "module": "Data management",
       "file": "src/utils/tripStorage.js",
       "status": "Implemented",
-      "issue": "Restore needs stage 3 import",
+      "issue": "Restore via backup file import",
       "priority": "P1"
     },
     {
@@ -304,11 +304,11 @@
       "priority": "P2"
     },
     {
-      "name": "Export / import / backup",
+      "name": "Export JSON/CSV + Import JSON",
       "module": "Data management",
-      "file": "docs/handover/plans/EXPORT_BACKUP_PLAN.md",
-      "status": "Partial",
-      "issue": "Stage 1 done (protection); export/import awaiting approval",
+      "file": "src/components/BackupPanel.jsx",
+      "status": "Implemented",
+      "issue": "On feat/export-import (awaiting merge); CSV not importable",
       "priority": "P1"
     },
     {
@@ -316,7 +316,7 @@
       "module": "Quality",
       "file": "src/utils/calculations.test.js",
       "status": "Partial",
-      "issue": "Unit tests done (55); component/E2E/CI pending",
+      "issue": "Unit tests done (88); component/E2E/CI pending",
       "priority": "P1"
     }
   ],
@@ -380,11 +380,6 @@
     },
     {
       "severity": "High",
-      "title": "Local data loss",
-      "detail": "No export/backup/sync yet; clearing site data deletes everything. Unreadable data is now copied before fallback (stage 1 done)."
-    },
-    {
-      "severity": "High",
       "title": "Energy semantics",
       "detail": "Charged kWh is presented as consumed kWh and attributed to the route recorded on the charging day."
     },
@@ -392,6 +387,11 @@
       "severity": "High",
       "title": "Mixed repository",
       "detail": "Unrelated Next.js profile workflow tracked beside EV; it contains real Google Sheet/Drive IDs in .env.example/config.ts and a hard-coded fallback approval secret in src/lib/approval.ts."
+    },
+    {
+      "severity": "Medium",
+      "title": "Local data loss",
+      "detail": "Data is per-browser; clearing site data deletes it unless exported. Export/Import (JSON+CSV) built on feat/export-import; unreadable data is copied before fallback (live)."
     },
     {
       "severity": "Medium",
@@ -438,12 +438,12 @@
     {
       "priority": "P0",
       "title": "Decide security model (offline personal vs. cloud multi-user)",
-      "status": "Needs owner decision"
+      "status": "Deferred by owner"
     },
     {
       "priority": "P0",
       "title": "Resolve repository contamination (Next.js files)",
-      "status": "Needs owner decision"
+      "status": "Deferred by owner"
     },
     {
       "priority": "P1",
@@ -452,8 +452,8 @@
     },
     {
       "priority": "P1",
-      "title": "Export / import / backup (stage 1 done)",
-      "status": "Stages 2-3 awaiting approval"
+      "title": "Export / import / backup (all 3 stages built)",
+      "status": "Stages 2-3 PR pending"
     },
     {
       "priority": "P1",
@@ -467,6 +467,11 @@
     }
   ],
   "updates": [
+    {
+      "date": "2026-10-28",
+      "who": "Claude Code",
+      "text": "Export JSON/CSV and Import JSON (preview, merge/replace) built on feat/export-import per owner answer (add CSV); 24 new tests; browser-verified. Security model and Next.js cleanup deferred by owner."
+    },
     {
       "date": "2026-10-28",
       "who": "Owner + Claude Code",
@@ -549,7 +554,7 @@
       "path": "docs/handover/plans/EXPORT_BACKUP_PLAN.md",
       "purpose": "Export/Import/Backup proposal (Thai)",
       "category": "Plan",
-      "status": "Stage 1 live; 2-3 awaiting approval"
+      "status": "Stage 1 live; 2-3 built, PR pending"
     },
     {
       "file": "HANDOVER_DASHBOARD.html",

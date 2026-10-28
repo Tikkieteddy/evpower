@@ -47,7 +47,7 @@ npm run docs:build     # regenerate docs/handover/HANDOVER_DASHBOARD.html
 npm run docs:validate  # links, referenced files, storage keys, secrets, dashboard freshness
 ```
 
-Verified 2026-10-28 (Claude): test PASS (63 + 1 expected fail), lint PASS, build PASS (652 kB chunk warning), docs:validate PASS, mobile 375 px runtime PASS.
+Verified 2026-10-28 (Claude): test PASS (87 + 1 expected fail), lint PASS, build PASS (652 kB chunk warning), docs:validate PASS, mobile 375 px runtime PASS.
 
 ## Documentation System
 
@@ -95,7 +95,7 @@ Vercel project name is `evpower`; public URL reported by the owner is `https://e
 1. Default credential: forced change on first login + README cleanup live since PR #3 (`6ce2634`). Remaining: real auth needs a backend (see 2).
 2. Owner decision: offline personal tool vs. secure multi-user product.
 3. Owner decision: fate of unrelated Next.js files.
-4. Export/Backup plan ([EXPORT_BACKUP_PLAN.md](docs/handover/plans/EXPORT_BACKUP_PLAN.md)): stage 1 done; stages 2-3 await answers to section 6.
+4. Export/Backup plan ([EXPORT_BACKUP_PLAN.md](docs/handover/plans/EXPORT_BACKUP_PLAN.md)): stage 1 live; stages 2-3 (JSON+CSV export, JSON import) done on `feat/export-import`, awaiting merge.
 5. Component/E2E tests (unit baseline done 2026-10-28).
 6. Fix energy-accounting semantics (charged vs consumed kWh).
 7. Code-split Recharts/dashboard views.

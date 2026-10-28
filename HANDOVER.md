@@ -24,7 +24,7 @@ There is no EV backend, API, relational database, cloud user store, file upload,
 | --- | --- | --- |
 | `npm run lint` | PASS | ESLint exit 0 |
 | `npm run build` | PASS with warning | JS chunk 651.83 kB, gzip 194.17 kB |
-| `npm test` | PASS | Vitest: 63 passed + 1 expected fail (known week-key bug) |
+| `npm test` | PASS | Vitest: 87 passed + 1 expected fail (known week-key bug) |
 | `npm run docs:validate` | PASS | links, files, storage keys, secrets |
 | Desktop runtime | PASS | Codex, local Vite |
 | Mobile runtime 375 px | PASS | Claude, all 7 tabs, no horizontal overflow |
@@ -33,7 +33,7 @@ There is no EV backend, API, relational database, cloud user store, file upload,
 
 - Medium (reassessed 2026-10-28; was rated Critical): the seeded admin password is public (source, Git history, bundle), but data is per-browser, so it only exposes data on a device someone else can use. Mitigated by a forced password change on first login and removal from README (PR #3, live since 2026-10-28).
 - High: passwords and users are plaintext Local Storage data; authorization is client-controlled.
-- High: data is device/browser-specific and can be lost when site data is cleared (no export yet). Corrupted trip data is now copied before fallback (fixed 2026-10-28).
+- High: data is device/browser-specific and can be lost when site data is cleared unless exported. Corrupted trip data is copied before fallback (live); JSON/CSV export and JSON import are on `feat/export-import` (awaiting merge).
 - High: charged energy and trip consumption are conflated in analytics.
 - High: unrelated Next.js application files are tracked in the same repository (with real Google resource IDs and a fallback secret).
 - Medium: unit tests only (no component/E2E tests); no data schema migrations.

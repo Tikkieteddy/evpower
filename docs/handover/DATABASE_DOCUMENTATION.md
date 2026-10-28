@@ -61,8 +61,13 @@ Object `{user, role, credit, signedInAt}`. On read, the user is re-matched again
 | --- | --- | --- |
 | `ev-charge-daily-log-v1:corrupt-<hash>` | main key unreadable on load | raw original string (hash of content, so one key per distinct value) |
 | `ev-charge-daily-log-v1:before-sample-<ISO timestamp>` | before "load sample data" | `Trip[]` JSON |
+| `ev-charge-daily-log-v1:before-import-<ISO timestamp>` | before every import (merge or replace) | `Trip[]` JSON |
 
-These keys are never read back automatically yet; restore/import arrives in stage 3. Existing keys and schemas are unchanged.
+These keys are not read back automatically; to restore, export/import a backup file (below).
+
+### Backup file (`evpower-backup-YYYY-MM-DD.json`, added 2026-10-28)
+
+`{format: "evpower-backup", schemaVersion: 1, appVersion, exportedAt, counts, data: {trips: Trip[], routePresets: RoutePreset[]}}` - users, passwords and sessions are never included. Import validates every field (date `YYYY-MM-DD`, numbers ≥ 0, `hasCharge` boolean, `idleRateMode` auto/manual, unique ids) and accepts schema version 1 only. CSV export (`evpower-trips-YYYY-MM-DD.csv`, UTF-8 with BOM) contains trips only and is not importable. Existing keys and schemas are unchanged.
 - `authStorageKey` and `legacyAuthStorageKey` in `auth.js` are the same string; the `localStorage.removeItem` calls only clean up a pre-Session-Storage copy.
 - No schema validator, migration, backup, revision, or conflict resolution exists.
 - Existing storage version suffix is embedded in key names, but migration code is absent.

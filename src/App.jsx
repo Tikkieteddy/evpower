@@ -77,6 +77,13 @@ export default function App() {
     setTrips(sampleTrips);
   };
 
+  // Keeps a local copy of the current trips first; refuses the import if that copy cannot be written.
+  const importTrips = (nextTrips) => {
+    if (!backupTrips(trips, "before-import").ok) return false;
+    setTrips(nextTrips);
+    return true;
+  };
+
   const logout = () => {
     clearAuthSession();
     setAuthSession(null);
@@ -88,7 +95,7 @@ export default function App() {
 
   const renderTab = () => {
     if (activeTab === "daily") {
-      return <DailyLog trips={trips} onSave={saveTrip} onDelete={deleteTrip} onResetSample={resetSample} />;
+      return <DailyLog trips={trips} onSave={saveTrip} onDelete={deleteTrip} onResetSample={resetSample} onImportTrips={importTrips} />;
     }
     if (activeTab === "weekly") return <WeeklyDashboard trips={trips} />;
     if (activeTab === "monthly") return <MonthlyDashboard trips={trips} />;

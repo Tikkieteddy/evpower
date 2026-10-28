@@ -1,6 +1,6 @@
-# แผนระบบ Export / Import / Backup ข้อมูล (ข้อเสนอ — รออนุมัติ)
+# แผนระบบ Export / Import / Backup ข้อมูล
 
-- **สถานะ:** ขั้นที่ 1 DONE และขึ้น production แล้ว (2026-10-28, PR #2 → `520c3d8`) · ขั้นที่ 2–3 PROPOSED รออนุมัติ
+- **สถานะ:** ขั้นที่ 1 DONE และขึ้น production แล้ว (2026-10-28, PR #2 → `520c3d8`) · ขั้นที่ 2–3 DONE บน branch `feat/export-import` (2026-10-28, รอ merge)
 - **วันที่:** 2026-10-28 · ผู้เสนอ: Claude Code
 - **Roadmap:** P1 "Backup, Export, Import, and Migration"
 - **หลักการ:** ทำงานใน browser ล้วน ไม่มี cloud ไม่มี server ไม่เปลี่ยน storage key/schema เดิม และไม่ลบข้อมูลผู้ใช้
@@ -30,7 +30,10 @@
 3. ก่อน "โหลดข้อมูลตัวอย่าง" ให้ดาวน์โหลด backup อัตโนมัติ (หรือเก็บสำเนาไว้ใน key `...:before-sample`)
 4. Test: JSON เสีย, `null`, object, array ว่าง, ข้อมูลปกติ — ยืนยันว่าค่าเดิมไม่ถูกทับ
 
-### ขั้นที่ 2 — Export (สำรองข้อมูลเป็นไฟล์)
+### ขั้นที่ 2 — Export (สำรองข้อมูลเป็นไฟล์) ✅ เสร็จแล้ว 2026-10-28
+
+> เจ้าของตอบ: **เพิ่ม CSV** ด้วย. ใช้ค่าที่เสนอสำหรับข้ออื่น: ไม่ export ผู้ใช้/รหัสผ่าน, วางในแท็บ Daily Log. Implementation: `src/utils/backup.js` (`createBackup`, `tripsToCsv`, `backupFilename` ใช้วันที่ท้องถิ่น), `BackupPanel.jsx` (Export JSON / Export CSV). CSV มี BOM ให้ Excel อ่านภาษาไทยได้ และใส่ `'` นำหน้าข้อความที่ขึ้นต้นด้วย `= + - @` กันสูตรอันตราย. CSV ใช้เปิดดู/วิเคราะห์ ส่วนการกู้คืนใช้ JSON
+
 
 ปุ่ม **"Export ข้อมูล"** ในแท็บ Daily Log → ดาวน์โหลดไฟล์ `evpower-backup-YYYY-MM-DD.json`
 
@@ -52,7 +55,10 @@
 - ไม่ export session
 - (ทางเลือก) Export CSV ของ trips สำหรับเปิดใน Excel — แยกเป็นปุ่มที่สอง
 
-### ขั้นที่ 3 — Import (กู้คืนจากไฟล์)
+### ขั้นที่ 3 — Import (กู้คืนจากไฟล์) ✅ เสร็จแล้ว 2026-10-28
+
+> Implementation: `parseBackup` (ตรวจ format/version/ทุกฟิลด์, แยกแถวผิด, id ซ้ำในไฟล์), `planImport` (merge/replace, conflict keep/useFile, เทียบแบบ normalize เพื่อไม่ให้ข้อมูลเก่าที่ไม่มี `idleRateMode` นับเป็น conflict). ทุกครั้งที่นำเข้า เก็บสำเนาไว้ที่ `ev-charge-daily-log-v1:before-import-<timestamp>` และยกเลิกถ้าเก็บไม่ได้; โหมดแทนที่ดาวน์โหลด backup ไฟล์ของข้อมูลปัจจุบันให้ก่อนด้วย. Import รับเฉพาะ JSON (ไม่รับ CSV)
+
 
 1. เลือกไฟล์ `.json` → ตรวจ `format`, `schemaVersion`, ชนิดข้อมูลทุกฟิลด์ (วันที่ `YYYY-MM-DD`, ตัวเลข ≥ 0)
 2. **หน้า Preview** ก่อนนำเข้า: จำนวนรายการ, ช่วงวันที่, จำนวนที่ซ้ำ (id เดียวกัน), แถวที่ผิดรูปแบบ
@@ -91,7 +97,7 @@
 - Manual (in-app browser, ไม่ใช่ browser จริงของผู้ใช้): export → ล้างข้อมูลใน origin ทดสอบ → import → ตัวเลข dashboard ตรงเดิม; ทดสอบจอ 375 px
 - Regression: `npm test`, `npm run lint`, `npm run build`, `npm run docs:validate`
 
-## 6. คำถามที่ต้องการคำตอบจากเจ้าของ
+## 6. คำถามที่ต้องการคำตอบจากเจ้าของ (ตอบแล้ว 2026-10-28: JSON + CSV; ข้ออื่นใช้ค่าที่เสนอ)
 
 1. อนุมัติให้เริ่ม **ขั้นที่ 1** (กันข้อมูลหาย) ได้เลยหรือไม่
 2. Export เฉพาะ JSON พอ หรือต้องการ CSV สำหรับ Excel ด้วย

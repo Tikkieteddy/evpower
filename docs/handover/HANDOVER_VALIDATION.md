@@ -170,3 +170,19 @@ Branch `docs/claude-takeover` from `master` @ `5360d94` (== `origin/master`, con
 | Production smoke test | PASS | login screen renders, no console errors |
 | Forced change on production | NOT VERIFIED | did not log in to production; verified on local dev origin |
 | Local `master` | PASS | fast-forwarded to `6ce2634`; `npm test` 63 passed + 1 expected fail |
+
+## Export / Import (2026-10-28, branch `feat/export-import`)
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| `npm test` | PASS | 87 passed + 1 expected fail (24 new in `backup.test.js`) |
+| `npm run lint` / `npm run build` | PASS | |
+| Browser: Export JSON | PASS | format `evpower-backup`, 7 trips + 4 presets, no users/password text |
+| Browser: Export CSV | PASS | `text/csv;charset=utf-8`, bytes start with UTF-8 BOM, header + 7 rows |
+| Browser: Import merge | PASS | preview 1 new / 1 conflict / 6 unchanged / 1 invalid; conflict kept; new preset added; `:before-import` copy written |
+| Browser: conflict "use file" | PASS | file value applied |
+| Browser: invalid file | PASS | clear error, nothing imported |
+| Browser: replace | PASS | backup of current 8 trips downloaded first; data replaced; presets kept when file had none |
+| Browser: mobile 375 px | PASS | panel fits, no horizontal overflow, no console errors |
+| Real downloads opened in Excel | NOT VERIFIED | blobs inspected in-page; file not opened in Excel |
+| Test data | CLEANED | local test origin keys removed |
