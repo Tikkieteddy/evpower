@@ -1,6 +1,6 @@
 # แผนระบบ Export / Import / Backup ข้อมูล
 
-- **สถานะ:** ขั้นที่ 1 DONE และขึ้น production แล้ว (2026-10-28, PR #2 → `520c3d8`) · ขั้นที่ 2–3 DONE บน branch `feat/export-import` (2026-10-28, รอ merge)
+- **สถานะ:** ขั้นที่ 1 DONE และขึ้น production แล้ว (2026-10-28, PR #2 → `520c3d8`) · ขั้นที่ 2–3 DONE และขึ้น production แล้ว (2026-10-28, PR #4 → `52be90e`)
 - **วันที่:** 2026-10-28 · ผู้เสนอ: Claude Code
 - **Roadmap:** P1 "Backup, Export, Import, and Migration"
 - **หลักการ:** ทำงานใน browser ล้วน ไม่มี cloud ไม่มี server ไม่เปลี่ยน storage key/schema เดิม และไม่ลบข้อมูลผู้ใช้

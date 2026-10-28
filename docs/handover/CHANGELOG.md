@@ -4,6 +4,7 @@ This is reconstructed from Git commit subjects; it is not a claim of semantic re
 
 | Commit | Change |
 | --- | --- |
+| `52be90e` | Merge PR #4: JSON/CSV export and JSON import |
 | `6ce2634` | Merge PR #3: force a password change when the seeded admin password is used |
 | `520c3d8` | Merge PR #2: Vitest unit tests + trip data overwrite protection |
 | `d8db83c` | Merge PR #1: project handover docs and docs tooling |
@@ -35,6 +36,6 @@ Tags/releases: NOT FOUND in the local Git repository.
 
 - 2026-10-28 Signing in with the seeded admin password now requires setting a new one (min 8 chars) before the dashboard opens (`ChangePasswordScreen.jsx`, `changeOwnPassword`). The seeded password can no longer be assigned to any user. README no longer prints it and now says the session is in Session Storage. Risk reassessed from Critical to Medium. No storage key/schema change; existing users and trips are kept. 9 new tests.
 
-## Unreleased - branch `feat/export-import`
+## 2026-10-28 - PR #4 `feat/export-import` (merged `52be90e`, commit `af30bd4`, deployed)
 
 - 2026-10-28 Export/Backup stages 2-3: "สำรอง / กู้คืนข้อมูล" panel in Daily Log. Export JSON backup (trips + route presets, never users/passwords), Export CSV for Excel (UTF-8 BOM, formula-injection safe), Import JSON with validation, preview, merge (default) or replace, conflict choice. Every import keeps a `:before-import-<timestamp>` copy and aborts if it cannot; replace also downloads a backup of the current data first. Shared `download.js`. 24 new tests. No existing storage key/schema change.

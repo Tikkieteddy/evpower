@@ -186,3 +186,14 @@ Branch `docs/claude-takeover` from `master` @ `5360d94` (== `origin/master`, con
 | Browser: mobile 375 px | PASS | panel fits, no horizontal overflow, no console errors |
 | Real downloads opened in Excel | NOT VERIFIED | blobs inspected in-page; file not opened in Excel |
 | Test data | CLEANED | local test origin keys removed |
+
+## PR #4 Merge and Deploy (2026-10-28)
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| PR #4 merged | PASS | merge commit `52be90e`; checks 2/2 SUCCESS, mergeable CLEAN beforehand |
+| Vercel deployment | PASS | commit status `success`; live in ~20 s |
+| Production serves new code | PASS | live bundle `index-CzOCx33q.js` contains the `evpower-backup` export code |
+| Production smoke test | PASS | login screen renders, no console errors |
+| Export/Import on production | NOT VERIFIED | did not log in to production; verified on local dev origin |
+| Local `master` | PASS | fast-forwarded to `52be90e`; `npm test` 87 passed + 1 expected fail |

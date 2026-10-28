@@ -6,12 +6,13 @@ _Updated 2026-10-28 after PR #1 and PR #2 were merged to `master` (`520c3d8`) an
 
 1. (Deferred) Choose offline-personal vs. secure multi-user architecture.
 2. (Deferred) Decide the fate of the unrelated Next.js files (`src/app/**`, `src/lib/**`, Next config, `.env.example`, `public/TNN_A.jpg`).
-3. Review/merge the PR for `feat/export-import` (Export JSON/CSV + Import JSON). Security model and Next.js files are deferred by the owner (2026-10-28): keep the system as is.
+Security model and Next.js files are deferred by the owner (2026-10-28): keep the system as is.
 
 ## Done 2026-10-28
 
 - Handover docs + docs tooling merged (PR #1).
 - Forced change of the seeded admin password + README cleanup merged and deployed (PR #3, `6ce2634`).
+- Export JSON/CSV + Import JSON merged and deployed (PR #4, `52be90e`); Export/Backup plan complete.
 - Vitest unit tests (55) and `npm test` now runs them (PR #2).
 - Export/Backup plan written; stage 1 (unreadable-data protection, safe sample reset, save-failure warning) implemented and tested (PR #2), deployed to production 2026-10-28.
 
